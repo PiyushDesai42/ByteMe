@@ -1,54 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.2.2" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="Geom.gps_vector" project="gps" file="/gps/src/Geom/gps_vector.java" binary="false" 
+  <class id="1" language="java" name="Geom.Point3D" project="gis" file="/gis/src/Geom/Point3D.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="81" width="191" x="-9" y="723"/>    
+    <position height="927" width="234" x="294" y="-343"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="2" language="java" name="Geom.Geom_element" project="gps" file="/gps/src/Geom/Geom_element.java" 
+  <class id="2" language="java" name="Geom.gps_vector" project="gis" file="/gis/src/Geom/gps_vector.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="81" width="191" x="63" y="624"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="3" language="java" name="Geom.Geom_element" project="gis" file="/gis/src/Geom/Geom_element.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="99" width="159" x="222" y="723"/>    
+    <position height="99" width="159" x="294" y="624"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="3" language="java" name="Geom.lat_lon_alt" project="gps" file="/gps/src/Geom/lat_lon_alt.java" 
+  <class id="4" language="java" name="Geom.lat_lon_alt" project="gis" file="/gis/src/Geom/lat_lon_alt.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="99" width="184" x="421" y="723"/>    
+    <position height="99" width="184" x="493" y="624"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="Geom.Point3D" project="gps" file="/gps/src/Geom/Point3D.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="927" width="234" x="222" y="-244"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <realization id="5">    
+  <generalization id="5">    
     <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="2"/>  
-  </realization>  
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
   <generalization id="6">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="4"/>  
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="1"/>  
   </generalization>  
-  <generalization id="7">    
+  <realization id="7">    
     <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="4"/>  
-  </generalization>  
+    <end type="TARGET" refId="3"/>  
+  </realization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    

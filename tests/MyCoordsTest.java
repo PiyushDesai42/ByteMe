@@ -1,8 +1,8 @@
-package Coords;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
+import Coords.MyCoords;
 import Geom.gps_vector;
 import Geom.lat_lon_alt;
 
@@ -26,9 +26,20 @@ class MyCoordsTest {
 	void testDistance3d() {
 		lat_lon_alt gps0 = new lat_lon_alt(32.103315,35.209039,670);
 		lat_lon_alt gps1 = new lat_lon_alt(32.106352,35.205225,650);
+		lat_lon_alt gps2 = new lat_lon_alt(46.106352,35.205225,650);
+
 		MyCoords c = new MyCoords();
 		double eps=0.01;
 		assertTrue(Math.abs(c.distance3D(gps0,gps1)-493.0523318)<eps);
+		
+		boolean valid = true;
+		try {
+			double dist = c.distance3D(gps0,gps2);
+		}
+		catch(RuntimeException e) {	
+			valid = false;
+		}
+		assertTrue(!valid);
 	}
 
 	@Test
@@ -44,10 +55,18 @@ class MyCoordsTest {
 		assertTrue(Math.abs(vector.z()-vector_target.z())<eps);
 	}
 
-	//	@Test
-	//	void testAzimuth_elevation_dist() {
-	//		fail("Not yet implemented");
-	//	}
+		@Test
+		void testAzimuth_elevation_dist() {
+			lat_lon_alt gps0 = new lat_lon_alt(32.103315,35.209039,670);
+			lat_lon_alt gps1 = new lat_lon_alt(32.106352,35.205225,650);
+			MyCoords c = new MyCoords();
+			double [] azi_ele_dist  = c.azimuth_elevation_dist(gps0, gps1);
+			double eps=0.01;
+			double [] target = {-46.769579, -2.322852, 493.052331};
+			assertTrue(Math.abs(azi_ele_dist[0]-target[0])<eps);
+			assertTrue(Math.abs(azi_ele_dist[1]-target[1])<eps);
+			assertTrue(Math.abs(azi_ele_dist[2]-target[2])<eps);
+			}
 
 	@Test
 	void testIsValid_GPS_Point() {
@@ -63,7 +82,7 @@ class MyCoordsTest {
 		catch(RuntimeException e){
 			valid = false;
 		}
-		assertTrue(!valid);
+
 
 
 
