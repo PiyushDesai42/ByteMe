@@ -44,12 +44,13 @@ public class To_kml {
 		for(int i = 0; i < titles.length; i++) {
 			writer.write(titles[i] + ": <b>" + dt[i] + "</b><br/>");
 		}
+		writer.write("Timestamp: <b>" + element.getMeta_data().getUTC(3) + "</b>");
 		writer.write("</description>");
 		writer.write("<styleUrl>#red</styleUrl>\n");
 		writer.write("<Point>\n");
 		writer.write("<coordinates>");
-		double lat = element.getGps_coords().x();
-		double lon = element.getGps_coords().y();
+		double lat = element.getGps_coords().y();
+		double lon = element.getGps_coords().x();
 		double alt = element.getGps_coords().z();
 		writer.write(lat + "," + lon + "," + alt);        
 		writer.write("</coordinates>");

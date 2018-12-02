@@ -12,11 +12,20 @@ public class Csv_element implements GIS_element{
 	private Lat_lon_alt gps_coords;
 	private Csv_meta_data meta_data;
 	
+	/**
+	 * constructor given a gps and meta data
+	 * @param gps
+	 * @param md
+	 */
 	public Csv_element(Lat_lon_alt gps, Csv_meta_data md) {
 		gps_coords = gps;
 		meta_data = md;
 	}
 	
+	/**
+	 * copy constructor
+	 * @param ot
+	 */
 	public Csv_element(Csv_element ot) {
 		gps_coords = new Lat_lon_alt(ot.getGeom().x(), ot.getGeom().y(), ot.getGeom().z());
 		meta_data = new Csv_meta_data(ot.getMeta_data());
@@ -54,12 +63,16 @@ public class Csv_element implements GIS_element{
 		this.meta_data = meta_data;
 	}
 	
-	
+	/**
+	 * return a string of a csv element
+	 */
 	public String toString() {
 		return gps_coords.toString() + "\n" + meta_data.toString();
 	}
 	
-	
+	/**
+	 * returns true iff ot is the same element
+	 */
 	public boolean equals(Object ot) {
 		if (ot instanceof Csv_element) {
 			Csv_element element = (Csv_element)ot;

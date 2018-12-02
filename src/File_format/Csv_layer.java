@@ -14,10 +14,17 @@ public class Csv_layer implements GIS_layer {
 
 	private Set<Csv_element> layer;
 
+	/**
+	 * regular constructor
+	 */
 	public Csv_layer() {
 		layer = new HashSet<Csv_element>();
 	}
 	
+	/**
+	 * copy constructor
+	 * @param csv_layer
+	 */
 	public Csv_layer(Csv_layer csv_layer) {
 		layer = new HashSet<Csv_element>();
 		layer.clear();
@@ -28,24 +35,34 @@ public class Csv_layer implements GIS_layer {
 		}
 	}
 
-
-
+	/**
+	 * adds an element to this layer
+	 */
 	@Override
 	public boolean add(GIS_element element) {
 		Csv_element ele = new Csv_element((Csv_element) element);
 		return layer.add(ele);
 	}
 
+	/**
+	 * adds all elements from collection to this layer
+	 */
 	@Override
 	public boolean addAll(Collection<? extends GIS_element> elements) {
 		return layer.addAll((Collection<? extends Csv_element>) elements);
 	}
 
+	/**
+	 * deletes all elements from layer
+	 */
 	@Override
 	public void clear() {
 		layer.clear();		
 	}
 
+	/**
+	 * returns true iff this layer contains a given element
+	 */
 	@Override
 	public boolean contains(Object obj) {
 		return layer.contains(obj);
@@ -56,21 +73,28 @@ public class Csv_layer implements GIS_layer {
 		return layer.containsAll(c);
 	}
 
+	/**
+	 * returns true if layer is empty
+	 */
 	@Override
 	public boolean isEmpty() {
 		return layer.isEmpty();
 	}
 
+	
 	@Override
 	public Iterator<GIS_element> iterator() {
 		return null;
 	}
 	
-
+	/**
+	 * returns the layer iterator
+	 */
 	public Iterator<Csv_element> iterator_csv() {
 		return layer.iterator();
 	}
 
+	
 	@Override
 	public boolean remove(Object obj) {
 		return layer.remove(obj);
