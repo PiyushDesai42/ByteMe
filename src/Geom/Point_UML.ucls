@@ -3,51 +3,25 @@
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="Geom.Point3D" project="gis" file="/gis/src/Geom/Point3D.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="927" width="234" x="294" y="-343"/>    
+    <position height="927" width="234" x="313" y="-359"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="Geom.gps_vector" project="gis" file="/gis/src/Geom/gps_vector.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="81" width="191" x="63" y="624"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <interface id="3" language="java" name="Geom.Geom_element" project="gis" file="/gis/src/Geom/Geom_element.java" 
+  <interface id="2" language="java" name="Geom.Geom_element" project="gis" file="/gis/src/Geom/Geom_element.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="99" width="159" x="294" y="624"/>    
+    <position height="99" width="159" x="313" y="608"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="4" language="java" name="Geom.lat_lon_alt" project="gis" file="/gis/src/Geom/lat_lon_alt.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="99" width="184" x="493" y="624"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <generalization id="5">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="1"/>  
-  </generalization>  
-  <generalization id="6">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="1"/>  
-  </generalization>  
-  <realization id="7">    
+  <realization id="3">    
     <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="3"/>  
+    <end type="TARGET" refId="2"/>  
   </realization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    

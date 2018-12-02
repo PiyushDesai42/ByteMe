@@ -1,10 +1,11 @@
-package Geom;
+package Coords;
 
-import Geom.lat_lon_alt;
+import Coords.Lat_lon_alt;
+import Geom.Point3D;
 
-public class lat_lon_alt extends Point3D{
+public class Lat_lon_alt extends Point3D{
 	
-	public lat_lon_alt(double lat, double lon, double alt) throws RuntimeException{
+	public Lat_lon_alt(double lat, double lon, double alt) throws RuntimeException{
 		super(lat,lon,alt);
 		if(!isValid_GPS_Point()) {
 			throw new RuntimeException("invalid gps point!");

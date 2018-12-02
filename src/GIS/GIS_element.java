@@ -1,7 +1,6 @@
 package GIS;
 
 import Geom.Geom_element;
-import Geom.lat_lon_alt;
 
 /**
  * This interface represents a GIS element with geometric representation and meta data such as:
@@ -12,5 +11,5 @@ import Geom.lat_lon_alt;
 public interface GIS_element {
 	public Geom_element getGeom();
 	public Meta_data getData();
-	public void translate(lat_lon_alt vec);
+	public void translate(Geom_element vec);
 }
