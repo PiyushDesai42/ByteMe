@@ -7,6 +7,11 @@ import GIS.GIS_element;
 import GIS.Meta_data;
 import Geom.Geom_element;
 
+/**
+ * this class implements GIS_element,
+ * and represents a Csv_element that contains a gps (Lat_lon_alt) Point and meta_data
+ * @author Eitan Lichtman, Netanel Indik
+ */
 public class Csv_element implements GIS_element{
 	
 	private Lat_lon_alt gps_coords;

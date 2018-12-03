@@ -5,7 +5,7 @@ package Coords;
  * 1. The 3D vector between two lat, lon, alt points.
  * 2. Adding a 3D vector in meters to a global point.
  * 3. convert a 3D vector from meters to polar coordinates
- * @author Boaz Ben-Moshe
+ * @author Eitan Lichtman, Netanel Indik
  */
 public interface coords_converter {
 	/** computes a new point which is the gps point transformed by a 3D vector (in meters)*/

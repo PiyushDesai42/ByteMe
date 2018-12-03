@@ -7,15 +7,38 @@ import java.util.ArrayList;
 
 import Coords.Lat_lon_alt;
 
+/**
+ * this class converts a csv file to a Csv_layer
+ * @author Eitan Lichtman, Netanel Indik
+ */
 public class From_csv {
 
-	private final BufferedReader reader;
+	private BufferedReader reader;
 
+	/**
+	 * initializes BufferedReader
+	 * @param input
+	 * @throws IOException
+	 */
 	public From_csv(String input) throws IOException {
-		reader = new BufferedReader(new FileReader(input));
+		try {
+			reader = new BufferedReader(new FileReader(input));
+			} catch (IOException e) {
+			System.out.println("invalid input folder!");
+		}
+		
 	}
 
 
+	/**
+	 * creates a layer of elements, each element includes a lat_lon_alt Point and meta data
+	 * @param titles
+	 * @param latIndex
+	 * @param lonIndex
+	 * @param altIndex
+	 * @return layer
+	 * @throws IOException
+	 */
 	private Csv_layer lines (String[] titles, int latIndex, int lonIndex, int altIndex) throws IOException{
 		Csv_layer layer = new Csv_layer();
 		String thisLine;
@@ -44,17 +67,18 @@ public class From_csv {
 					layer.add(element);
 				}
 			return layer;
-			
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
 			return null;
 		}
-		
 	}
 
 
-	
+	/** 
+	 * @return Csv_layer representing the csv file
+	 * @throws IOException
+	 */
 	public Csv_layer to_Csv_layer() throws IOException{
 		try {
 			reader.readLine();
@@ -76,9 +100,6 @@ public class From_csv {
 			e.printStackTrace();
 			return null;
 		}
-		
 	}
-
-
 
 }

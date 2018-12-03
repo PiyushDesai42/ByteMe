@@ -3,6 +3,10 @@ package Coords;
 import Coords.Lat_lon_alt;
 import Geom.Point3D;
 
+/**
+ * this class extends Point3D and represents a Gps (Lat lon alt) Point
+ * @author Eitan Lichtman, Netanel Indik
+ */
 public class Lat_lon_alt extends Point3D{
 	
 	public Lat_lon_alt(double lat, double lon, double alt) throws RuntimeException{

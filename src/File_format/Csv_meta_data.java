@@ -11,12 +11,20 @@ import java.util.List;
 import GIS.Meta_data;
 import Geom.Point3D;
 
+/**
+ * this class implements Meta_data,
+ * and represents a Csv_meta_data that contains data about a gps point besides for it's coordinates
+ * @author Eitan Lichtman, Netanel Indik
+ */
 public class Csv_meta_data implements Meta_data{
 
 
 	private List<String[]> data;
 
-
+	/**
+	 * constructor that initializes the data list to equal a given list
+	 * @param dt
+	 */
 	public Csv_meta_data(List<String[]> dt) {
 		data = new ArrayList<String[]>();
 		Iterator<String[]> it = dt.iterator();
@@ -24,7 +32,10 @@ public class Csv_meta_data implements Meta_data{
 			data.add(it.next());
 	}
 	
-	
+	/**
+	 * copy constructor
+	 * @param ot
+	 */
 	public Csv_meta_data(Csv_meta_data ot) {
 		data = new ArrayList<String[]>();
 		Iterator<String[]> it = ot.getData().iterator();
@@ -33,7 +44,9 @@ public class Csv_meta_data implements Meta_data{
 	}
 
 
-	/** returns the Universal Time Clock associated with this data (first time in the data)*/
+	/** 
+	 * returns the Universal Time Clock associated with this data (first time in the data)
+	 */
 	@Override
 	public long getUTC(int timeIndex) throws IOException{
 		if (data.size()<2)
@@ -53,7 +66,9 @@ public class Csv_meta_data implements Meta_data{
 		return utc;
 	}
 
-	/** return a String representing this data */
+	/** 
+	 *  return a String representing this data
+	 */
 	public String toString() {
 		String s="";
 		Iterator<String[]> it = data.iterator();
@@ -62,7 +77,9 @@ public class Csv_meta_data implements Meta_data{
 		return s;
 	}
 
-	
+	/**
+	 * returns true iff the given object equals our Csv_meta_data
+	 */
 	public boolean equals(Object ot) {
 		if (ot instanceof Csv_meta_data) {
 			Iterator<String[]> it1 = data.iterator();
@@ -71,7 +88,6 @@ public class Csv_meta_data implements Meta_data{
 				if(!it1.next().equals(it2.next()))
 					return false;
 			}
-			
 			return !it1.hasNext() && !it2.hasNext();
 		}
 		else{

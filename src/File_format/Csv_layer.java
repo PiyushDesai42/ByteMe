@@ -10,6 +10,11 @@ import GIS.GIS_element;
 import GIS.GIS_layer;
 import GIS.Meta_data;
 
+/**
+ * this class implements GIS_layer,
+ * and represents a Csv_layer that contains a set of Csv_elements
+ * @author Eitan Lichtman, Netanel Indik
+ */
 public class Csv_layer implements GIS_layer {
 
 	private Set<Csv_element> layer;
@@ -27,7 +32,6 @@ public class Csv_layer implements GIS_layer {
 	 */
 	public Csv_layer(Csv_layer csv_layer) {
 		layer = new HashSet<Csv_element>();
-		layer.clear();
 		Iterator<Csv_element> it = csv_layer.iterator_csv();
 		while(it.hasNext()) {
 			Csv_element element = it.next();
@@ -40,8 +44,7 @@ public class Csv_layer implements GIS_layer {
 	 */
 	@Override
 	public boolean add(GIS_element element) {
-		Csv_element ele = new Csv_element((Csv_element) element);
-		return layer.add(ele);
+		return layer.add((Csv_element) element);
 	}
 
 	/**
@@ -94,7 +97,9 @@ public class Csv_layer implements GIS_layer {
 		return layer.iterator();
 	}
 
-	
+	/**
+	 * removes a given object
+	 */
 	@Override
 	public boolean remove(Object obj) {
 		return layer.remove(obj);
@@ -110,11 +115,14 @@ public class Csv_layer implements GIS_layer {
 		return layer.retainAll(c);
 	}
 
+	/**
+	 * returns layers size
+	 */
 	@Override
 	public int size() {
 		return layer.size();
 	}
-
+	
 	@Override
 	public Object[] toArray() {
 		return layer.toArray();
@@ -125,6 +133,9 @@ public class Csv_layer implements GIS_layer {
 		return (T[]) layer.toArray(a);
 	}
 
+	/**
+	 * returns the meta data representing this layer
+	 */
 	@Override
 	public Meta_data get_Meta_data() {
 		Iterator<Csv_element> it = this.iterator_csv();
@@ -144,19 +155,22 @@ public class Csv_layer implements GIS_layer {
 		return layer;
 	}
 
-	private void setLayer(Set layer) {
-		Iterator<Csv_element> it = this.iterator_csv();
+	private void setLayer(Set ot) {
+		this.clear();
+		Iterator<Csv_element> it = ot.iterator();
 		while(it.hasNext()) {
-			this.layer.add(it.next());
+			add(it.next());
 		}
 	}
 
-	
+	/**
+	 * returns a String representing this layer
+	 */
 	public String toString () {
 		String s ="";
 		Iterator<Csv_element> it = this.iterator_csv();
 		while(it.hasNext()) {
-			s = s + it.next().toString();
+			s = s + it.next().toString() + "\n";
 		}
 		return s;
 	}

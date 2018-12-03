@@ -3,89 +3,150 @@
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="File_format.Csv2kml" project="gis" file="/gis/src/File_format/Csv2kml.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="135" width="133" x="456" y="72"/>    
+    <position height="135" width="102" x="365" y="86"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="File_format.From_csv" project="gis" file="/gis/src/File_format/From_csv.java" 
+  <class id="2" language="java" name="File_format.Main" project="gis" file="/gis/src/File_format/Main.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="135" width="184" x="862" y="72"/>    
+    <position height="99" width="113" x="507" y="86"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="File_format.Json_101" project="gis" file="/gis/src/File_format/Json_101.java" 
+  <class id="3" language="java" name="File_format.From_csv" project="gis" file="/gis/src/File_format/From_csv.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="135" width="113" x="1086" y="72"/>    
+    <position height="135" width="184" x="660" y="86"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="File_format.Csv_element" project="gis" 
+  <class id="4" language="java" name="File_format.From_csv_multy" project="gis" 
+    file="/gis/src/File_format/From_csv_multy.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="168" x="884" y="86"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="File_format.MultiCSV" project="gis" file="/gis/src/File_format/MultiCSV.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="136" x="1318" y="86"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="File_format.Json_101" project="gis" file="/gis/src/File_format/Json_101.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="113" x="1494" y="86"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="File_format.Csv_element" project="gis" 
     file="/gis/src/File_format/Csv_element.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="279" width="226" x="629" y="746"/>    
+    <position height="279" width="226" x="976" y="1223"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="File_format.Csv_meta_data" project="gis" 
+  <class id="8" language="java" name="File_format.Csv_project" project="gis" 
+    file="/gis/src/File_format/Csv_project.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="423" width="210" x="1092" y="297"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="File_format.To_kml_multy" project="gis" 
+    file="/gis/src/File_format/To_kml_multy.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="117" width="186" x="1092" y="86"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="File_format.Csv_meta_data" project="gis" 
     file="/gis/src/File_format/Csv_meta_data.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="207" width="184" x="629" y="1065"/>    
+    <position height="207" width="184" x="976" y="1542"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="File_format.Csv_layer" project="gis" file="/gis/src/File_format/Csv_layer.java" 
+  <class id="11" language="java" name="File_format.Csv_layer" project="gis" file="/gis/src/File_format/Csv_layer.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="423" width="223" x="629" y="283"/>    
+    <position height="423" width="223" x="976" y="760"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="File_format.To_kml" project="gis" file="/gis/src/File_format/To_kml.java" 
+  <class id="12" language="java" name="File_format.To_kml" project="gis" file="/gis/src/File_format/To_kml.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="171" width="193" x="629" y="72"/>    
+    <position height="171" width="193" x="859" y="297"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <association id="8">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="9" name="layer"/>      
-      <multiplicity id="10" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="11">    
+  <association id="13">    
     <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="12" name="layer"/>      
-      <multiplicity id="13" minimum="0" maximum="1"/>    
+      <attribute id="14" name="meta_data"/>      
+      <multiplicity id="15" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
+    <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="14">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="15" name="meta_data"/>      
-      <multiplicity id="16" minimum="0" maximum="1"/>    
+  <association id="16">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="17" name="project"/>      
+      <multiplicity id="18" minimum="0" maximum="2147483647"/>    
     </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="19">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="20" name="layer"/>      
+      <multiplicity id="21" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="22">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="23" name="csv_project"/>      
+      <multiplicity id="24" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="25">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="26" name="layer"/>      
+      <multiplicity id="27" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

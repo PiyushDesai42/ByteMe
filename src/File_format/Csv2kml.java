@@ -2,16 +2,29 @@ package File_format;
 
 import java.io.IOException;
 
+/**
+ * this class converts a csv file to kml folmat
+ * @author Eitan Lichtman, Netanel Indik
+ */
 public class Csv2kml {
 
-	String input;
-	String output;
-	
-	public Csv2kml(String input, String output) throws IOException {
+	private String input;
+	private String output;
+
+	/**
+	 * constructor that receives an input and output file
+	 * @param input
+	 * @param output
+	 * @throws IOException
+	 */
+	public Csv2kml(String input) throws IOException {
 		this.input = input;
-		this.output = output;
+		this.output = input.substring(0, input.indexOf(".csv")) + ".kml";
 	}
-	
+
+	/**
+	 * reads a csv file converts it and writes it to a kml file
+	 */
 	void run() {
 		try {
 			From_csv csv = new From_csv(input);
@@ -22,5 +35,19 @@ public class Csv2kml {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/** 
+	 * @return a layer representing the csv file
+	 */
+	Csv_layer getLayer() {
+		Csv_layer layer = null;
+		try {
+			From_csv csv = new From_csv(input);
+			layer = csv.to_Csv_layer();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return layer;
 	}
 }

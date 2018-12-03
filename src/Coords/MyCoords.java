@@ -1,5 +1,8 @@
 package Coords;
-
+/**
+ * this class implements the methods from the coords_converter interface
+ * @author Eitan Lichtman, Netanel Indik
+ */
 public class MyCoords implements coords_converter{
 
 	private final double earthRadius = 6371*1000;

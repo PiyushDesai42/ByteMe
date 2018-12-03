@@ -6,15 +6,30 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * this class converts a Csv_layer to a kml folmat file
+ * @author Eitan Lichtman, Netanel Indik
+ */
 public class To_kml {
 
-	private final BufferedWriter writer;
+	private BufferedWriter writer;
 	private Csv_layer layer;
 
-	public To_kml(String output, Csv_layer csv_layer) throws IOException {
-		writer = new BufferedWriter(new FileWriter(output));
+	/**
+	 * constructor initializes the BufferedWriter
+	 * @param output
+	 * @param csv_layer
+	 * @throws IOException
+	 */
+	public To_kml(String output, Csv_layer csv_layer) throws IOException{
+		try {
+			writer = new BufferedWriter(new FileWriter(output));
+		} catch (IOException e) {
+			System.out.println("invalid output folder!");
+		}
 		layer = new Csv_layer(csv_layer);
 	}
+	
 	
 	private void writeStart() throws IOException {
 		writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
@@ -58,7 +73,9 @@ public class To_kml {
 		writer.write("</Placemark>\n");
 	}
 	
-	
+	/**
+	 * converts the layer to a kml file
+	 */
 	public void run() {
 		try {
 			writeStart();
