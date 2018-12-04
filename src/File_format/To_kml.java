@@ -13,10 +13,11 @@ import java.util.Iterator;
 public class To_kml {
 
 	private BufferedWriter writer;
-	private Csv_layer layer;
+	private Csv_layer layer = null;
+	private Csv_project project = null;
 
 	/**
-	 * constructor initializes the BufferedWriter
+	 * constructor initializes the BufferedWriter and layer
 	 * @param output
 	 * @param csv_layer
 	 * @throws IOException
@@ -29,8 +30,24 @@ public class To_kml {
 		}
 		layer = new Csv_layer(csv_layer);
 	}
-	
-	
+
+
+	/**
+	 * constructor initializes the BufferedWriter and project
+	 * @param output
+	 * @param csv_project
+	 * @throws IOException
+	 */
+	public To_kml(String output, Csv_project csv_project) throws IOException{
+		try {
+			writer = new BufferedWriter(new FileWriter(output));
+		} catch (IOException e) {
+			System.out.println("invalid output folder!");
+		}
+		project = new Csv_project(csv_project);
+	}
+
+
 	private void writeStart() throws IOException {
 		writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 		writer.write("<kml xmlns=\"http://www.opengis.net/kml/2.2\">");
@@ -38,15 +55,15 @@ public class To_kml {
 		writer.write("<Style id=\"red\"><IconStyle><Icon><href>http://maps.google.com/mapfiles/ms/icons/red-dot.png</href></Icon></IconStyle></Style>");
 		writer.write("<Folder><name>Wifi Networks</name>\n");
 	}
-	
-	
+
+
 	private void writeEnd() throws IOException {
 		writer.write("</Folder>\n");
 		writer.write("</Document>\n");
 		writer.write("</kml>");
 	}
-	
-	
+
+
 	private void writePlacemark(Csv_element element) throws IOException {
 		Csv_meta_data md = element.getMeta_data();
 		String [] str = md.getData().get(1);
@@ -72,11 +89,11 @@ public class To_kml {
 		writer.write("</Point>\n");
 		writer.write("</Placemark>\n");
 	}
-	
+
 	/**
 	 * converts the layer to a kml file
 	 */
-	public void run() {
+	public void run_layer() {
 		try {
 			writeStart();
 			Iterator<Csv_element> it = layer.iterator_csv();
@@ -85,11 +102,32 @@ public class To_kml {
 			}
 			writeEnd();
 			writer.close();
-			} catch (IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
-	
+
+	/**
+	 * converts the project to a kml file
+	 */
+	public void run_project() {
+		try {
+			writeStart();
+			Iterator<Csv_layer> it_layer = project.iterator_csv();
+			while(it_layer.hasNext()) {
+				Iterator<Csv_element> it_element = it_layer.next().iterator_csv();
+				while(it_element.hasNext()) {
+					writePlacemark(it_element.next());
+				}
+			}
+			writeEnd();
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 }

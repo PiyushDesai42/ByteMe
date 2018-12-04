@@ -31,8 +31,8 @@ public class To_kml_multy {
 		int counter = 1;
 		try {
 			while(it.hasNext()) {
-				To_kml kml = new To_kml(outputFolder + "\\fileNumber" + counter +".kml", it.next());
-				kml.run();
+				To_kml kml = new To_kml(outputFolder + "\\layerNumber" + counter +".kml", it.next());
+				kml.run_layer();
 				counter++;
 			}
 		} catch (IOException e) {

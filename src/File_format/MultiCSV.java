@@ -23,14 +23,31 @@ public class MultiCSV {
 
 
 	/**
-	 * reads multiple csv files, converts and writes them to a kml file
+	 * reads multiple csv files, converts and writes them to kml files
 	 */
-	void run() {
+	void run_multi_kml() {
 		try {
 			From_csv_multy csv = new From_csv_multy(input);
 			Csv_project project = csv.to_Csv_project();
 			To_kml_multy kml = new To_kml_multy(output, project);
 			kml.run();
+			System.out.println("Done!");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * reads multiple csv files, converts and writes them to one kml file
+	 */
+	void run_single_kml() {
+		try {
+			From_csv_multy csv = new From_csv_multy(input);
+			Csv_project project = csv.to_Csv_project();
+			this.output = output + "\\project.kml";
+			To_kml kml = new To_kml(output, project);
+			kml.run_project();
 			System.out.println("Done!");
 		} catch (IOException e) {
 			e.printStackTrace();

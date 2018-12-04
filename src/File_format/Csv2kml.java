@@ -30,7 +30,7 @@ public class Csv2kml {
 			From_csv csv = new From_csv(input);
 			Csv_layer layer = csv.to_Csv_layer();
 			To_kml kml = new To_kml(output, layer);
-			kml.run();
+			kml.run_layer();
 			System.out.println("Done!");
 		} catch (IOException e) {
 			e.printStackTrace();
