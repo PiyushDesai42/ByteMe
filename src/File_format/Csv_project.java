@@ -11,8 +11,7 @@ import GIS.GIS_project;
 import GIS.Meta_data;
 
 /**
- * this class implements GIS_project,
- * and represents a Csv_project that contains a set of Csv_layers
+ * this class represents a Csv_project that contains a set of Csv_layers
  * @author Eitan Lichtman, Netanel Indik
  */
 public class Csv_project implements GIS_project{
@@ -146,13 +145,15 @@ public class Csv_project implements GIS_project{
 			Csv_layer layer = it_layer.next();
 		Iterator<Csv_element> it_element = layer.iterator_csv();
 		Csv_element element = it_element.next();
-		md.add(element.getMeta_data().getData().get(0));
+		md.add(element.getMeta_data().getData().get(0));          //adding title Array
 		do{
-			md.add(element.getMeta_data().getData().get(1));
+			md.add(element.getMeta_data().getData().get(1));      //adding data Arrays
 		Csv_meta_data current = element.getMeta_data();
 		element = it_element.next();
 		}
 		while(it_element.hasNext());
+		String [] space = {"\n"};
+		md.add(space);                                            //addding a space between layers
 		}
 		return new Csv_meta_data (md);
 	}

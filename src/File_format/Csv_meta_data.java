@@ -12,8 +12,13 @@ import GIS.Meta_data;
 import Geom.Point3D;
 
 /**
- * this class implements Meta_data,
- * and represents a Csv_meta_data that contains data about a gps point besides for it's coordinates
+ * This class represents a Csv_meta_data that contains data about a gps point besides for it's coordinates.
+ * If the list has only two Arrays:
+ * it represents the data of an element with one Array for titles and one for data.
+ * If the list has more than two Arrays:
+ * it represents the data of a layer with one Array for titles and the rest for data.
+ * If the list has more than two Arrays and contains Arrays with "\n":
+ * it represents the data of a project with one Array for titles the rest for data and the "\n" Array separates the different layers.
  * @author Eitan Lichtman, Netanel Indik
  */
 public class Csv_meta_data implements Meta_data{
