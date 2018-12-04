@@ -53,7 +53,13 @@ public class Csv_meta_data implements Meta_data{
 	 * returns the Universal Time Clock associated with this data (first time in the data)
 	 */
 	@Override
-	public long getUTC(int timeIndex) throws IOException{
+	public long getUTC() throws IOException{
+		int timeIndex = -1;
+		String [] titles = data.get(0);
+		for(int i = 0; i<titles.length; i++) {
+			if(titles[i].contains("Time") || titles[i].contains("Seen"))
+				timeIndex = i;
+		}
 		if (data.size()<2)
 			throw new IOException();
 		Iterator<String[]> it = data.iterator();

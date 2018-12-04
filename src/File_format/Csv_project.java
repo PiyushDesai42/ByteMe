@@ -2,8 +2,8 @@ package File_format;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import GIS.GIS_layer;
@@ -11,18 +11,18 @@ import GIS.GIS_project;
 import GIS.Meta_data;
 
 /**
- * this class represents a Csv_project that contains a set of Csv_layers
+ * this class represents a Csv_project that contains a list of Csv_layers
  * @author Eitan Lichtman, Netanel Indik
  */
 public class Csv_project implements GIS_project{
 
-	private Set<Csv_layer> project;
+	private List<Csv_layer> project;
 
 	/**
 	 * regular constructor
 	 */
 	public Csv_project() {
-		project = new HashSet<Csv_layer>();
+		project = new ArrayList<Csv_layer>();
 	}
 	
 	/**
@@ -30,7 +30,7 @@ public class Csv_project implements GIS_project{
 	 * @param csv_project
 	 */
 	public Csv_project(Csv_project csv_project) {
-		project = new HashSet<Csv_layer>();
+		project = new ArrayList<Csv_layer>();
 		Iterator<Csv_layer> it = csv_project.iterator_csv();
 		while(it.hasNext()) {
 			Csv_layer layer = it.next();
@@ -45,7 +45,14 @@ public class Csv_project implements GIS_project{
 	 */
 	@Override
 	public boolean add(GIS_layer layer) {
-		return project.add((Csv_layer) layer);
+		boolean ok = project.add((Csv_layer) layer);
+		if(!ok)
+			return false;
+		else {
+			Project_Comparator c =  new Project_Comparator();
+			project.sort(c);                                    //sorting according to time
+			return true;
+		}
 	}
 
 	/**
@@ -53,7 +60,13 @@ public class Csv_project implements GIS_project{
 	 */
 	@Override
 	public boolean addAll(Collection<? extends GIS_layer> layers) {
-		return project.addAll((Collection<? extends Csv_layer>) layers);
+		Iterator<GIS_layer> it = (Iterator<GIS_layer>) layers.iterator();
+		if(!it.hasNext())
+			return false;
+		while(!it.hasNext()) {
+			add(it.next());
+		}
+		return true;
 	}
 
 	/**
@@ -158,7 +171,7 @@ public class Csv_project implements GIS_project{
 		return new Csv_meta_data (md);
 	}
 
-	public Set<Csv_layer> getProject() {
+	public List<Csv_layer> getProject() {
 		return project;
 	}
 

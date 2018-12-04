@@ -76,7 +76,7 @@ public class To_kml {
 		for(int i = 0; i < titles.length; i++) {
 			writer.write(titles[i] + ": <b>" + dt[i] + "</b><br/>");
 		}
-		writer.write("Timestamp: <b>" + element.getMeta_data().getUTC(3) + "</b>");
+		writer.write("Timestamp: <b>" + element.getMeta_data().getUTC() + "</b>");
 		writer.write("</description>");
 		writer.write("<styleUrl>#red</styleUrl>\n");
 		writer.write("<Point>\n");

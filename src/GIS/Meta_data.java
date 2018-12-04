@@ -7,10 +7,10 @@ import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 import Geom.Point3D;
 
 public interface Meta_data {
-	/** returns the Universal Time Clock associated with this data given the time index in the data table 
+	/** returns the Universal Time Clock associated with this data
 	 * @throws IOException 
 	 * @throws ParseException */
-	public long getUTC(int timeIndex) throws IOException;
+	public long getUTC() throws IOException;
 	/** return a String representing this data */
 	public String toString();
 	/**
