@@ -14,13 +14,17 @@ import Coords.Lat_lon_alt;
 public class From_csv {
 
 	private BufferedReader reader;
+	private int latIndex, lonIndex, altIndex;
 
 	/**
 	 * initializes BufferedReader
 	 * @param input
 	 * @throws IOException
 	 */
-	public From_csv(String input) throws IOException {
+	public From_csv(String input,int latIndex, int lonIndex, int altIndex) throws IOException {
+		this.latIndex = latIndex;
+		this.lonIndex = lonIndex;
+		this.altIndex = altIndex;
 		try {
 			reader = new BufferedReader(new FileReader(input));
 			} catch (IOException e) {
@@ -39,7 +43,7 @@ public class From_csv {
 	 * @return layer
 	 * @throws IOException
 	 */
-	private Csv_layer lines (String[] titles, int latIndex, int lonIndex, int altIndex) throws IOException{
+	private Csv_layer lines (String[] titles) throws IOException{
 		Csv_layer layer = new Csv_layer();
 		String thisLine;
 		try {
@@ -84,16 +88,7 @@ public class From_csv {
 			reader.readLine();
 			String tl = reader.readLine();
 			String[] titles = tl.split(",");
-			int latIndex=Integer.MIN_VALUE, lonIndex=Integer.MIN_VALUE, altIndex=Integer.MIN_VALUE;
-			for(int i = 0; i < titles.length; i++) {
-				if(titles[i].equalsIgnoreCase("CurrentLatitude"))
-					latIndex = i;
-				else if(titles[i].equalsIgnoreCase("CurrentLongitude"))
-					lonIndex = i;
-				else if(titles[i].equalsIgnoreCase("AltitudeMeters"))
-					altIndex = i;
-			}
-			Csv_layer layer = lines(titles, latIndex, lonIndex, altIndex);
+			Csv_layer layer = lines(titles);
 			reader.close();
 			return layer;
 		} catch (IOException e) {

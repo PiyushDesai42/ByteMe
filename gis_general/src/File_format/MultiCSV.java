@@ -11,12 +11,17 @@ public class MultiCSV {
 	private String input;
 	private String output;
 	
+	private int latIndex, lonIndex, altIndex;
+	
 	/**
 	 * constructor that initializes input and output folders
 	 * @param originalFolder
 	 * @param outputFolder
 	 */
-	public MultiCSV(String originalFolder, String outputFolder){
+	public MultiCSV(String originalFolder, String outputFolder,int latIndex, int lonIndex, int altIndex){
+		this.latIndex = latIndex;
+		this.lonIndex = lonIndex;
+		this.altIndex = altIndex;
 		input = originalFolder;
 		output = outputFolder;
 	}
@@ -27,7 +32,7 @@ public class MultiCSV {
 	 */
 	void run_multi_kml() {
 		try {
-			From_csv_multy csv = new From_csv_multy(input);
+			From_csv_multy csv = new From_csv_multy(input,latIndex, lonIndex, altIndex);
 			Csv_project project = csv.to_Csv_project();
 			To_kml_multy kml = new To_kml_multy(output, project);
 			kml.run();
@@ -43,7 +48,7 @@ public class MultiCSV {
 	 */
 	void run_single_kml() {
 		try {
-			From_csv_multy csv = new From_csv_multy(input);
+			From_csv_multy csv = new From_csv_multy(input,latIndex, lonIndex, altIndex);
 			Csv_project project = csv.to_Csv_project();
 			this.output = output + "\\project.kml";
 			To_kml kml = new To_kml(output, project);
@@ -58,7 +63,7 @@ public class MultiCSV {
 	 * @return a project representing the csv files in the folder
 	 */
 	Csv_project getProject() {
-		From_csv_multy csv = new From_csv_multy(input);
+		From_csv_multy csv = new From_csv_multy(input,latIndex, lonIndex, altIndex);
 		Csv_project project = csv.to_Csv_project();
 		return project;
 	}

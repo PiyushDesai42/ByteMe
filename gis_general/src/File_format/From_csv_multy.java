@@ -15,8 +15,13 @@ public class From_csv_multy {
 	private List<String> filenames = new LinkedList<String>();
 
 	private File originalFolder;
+	
+	private int latIndex, lonIndex, altIndex;
 
-	public From_csv_multy(String folderName) {
+	public From_csv_multy(String folderName,int latIndex, int lonIndex, int altIndex) {
+		this.latIndex = latIndex;
+		this.lonIndex = lonIndex;
+		this.altIndex = altIndex;
 		originalFolder = new File(folderName);
 		listFilesForFolder(originalFolder);
 	}
@@ -58,7 +63,7 @@ public class From_csv_multy {
 		Csv_project project = new Csv_project();
 		try {
 			while(it.hasNext()) {
-				From_csv csv = new From_csv(it.next());
+				From_csv csv = new From_csv(it.next(),latIndex, lonIndex, altIndex);
 				Csv_layer layer = csv.to_Csv_layer();
 				project.add(layer);
 			}

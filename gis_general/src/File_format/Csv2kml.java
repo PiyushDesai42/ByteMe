@@ -10,6 +10,7 @@ public class Csv2kml {
 
 	private String input;
 	private String output;
+	private int latIndex, lonIndex, altIndex;
 
 	/**
 	 * constructor that receives an input and output file
@@ -17,7 +18,10 @@ public class Csv2kml {
 	 * @param output
 	 * @throws IOException
 	 */
-	public Csv2kml(String input) throws IOException {
+	public Csv2kml(String input,int latIndex, int lonIndex, int altIndex) throws IOException {
+		this.latIndex = latIndex;
+		this.lonIndex = lonIndex;
+		this.altIndex = altIndex;
 		this.input = input;
 		this.output = input.substring(0, input.indexOf(".csv")) + ".kml";
 	}
@@ -27,7 +31,7 @@ public class Csv2kml {
 	 */
 	void run() {
 		try {
-			From_csv csv = new From_csv(input);
+			From_csv csv = new From_csv(input,latIndex, lonIndex, altIndex);
 			Csv_layer layer = csv.to_Csv_layer();
 			To_kml kml = new To_kml(output, layer);
 			kml.run_layer();
@@ -43,7 +47,7 @@ public class Csv2kml {
 	Csv_layer getLayer() {
 		Csv_layer layer = null;
 		try {
-			From_csv csv = new From_csv(input);
+			From_csv csv = new From_csv(input,latIndex, lonIndex, altIndex);
 			layer = csv.to_Csv_layer();
 		} catch (IOException e) {
 			e.printStackTrace();
