@@ -1,13 +1,8 @@
 package game_elements;
 
-import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
@@ -28,11 +23,27 @@ public class Map {
 		gps_max = new Lat_lon_alt(max);
 	}
 
-//	public Point gps_to_pixel(Lat_lon_alt gps) {
-//
-//	}
-//
-//	public Lat_lon_alt pixel_to_gps(Point pixel) {
-//
-//	}
+	public Lat_lon_alt getGps_min() {
+		return gps_min;
+	}
+
+	public void setGps_min(Lat_lon_alt gps_min) {
+		this.gps_min = gps_min;
+	}
+
+	public Lat_lon_alt getGps_max() {
+		return gps_max;
+	}
+
+	public void setGps_max(Lat_lon_alt gps_max) {
+		this.gps_max = gps_max;
+	}
+
+	public void setImage(BufferedImage image) {
+		this.image = image;
+	}
+	
+	
+	
+
 }
