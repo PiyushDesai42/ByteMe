@@ -25,7 +25,8 @@ import javax.swing.event.MenuListener;
 
 import com.sun.javafx.geom.Point2D;
 
-import game_elements.Ratio;
+import algo.Ratio;
+
 
 
 public class MainWindow extends JFrame implements MouseListener, MenuListener, ActionListener, KeyListener
@@ -42,13 +43,27 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener, A
 	private void initGUI() 
 	{
 		MenuBar menuBar = new MenuBar();
-		Menu menu = new Menu("Menu"); 
-		MenuItem item1 = new MenuItem("menu item 1");
-		MenuItem item2 = new MenuItem("menu item 2");
+		
+		Menu csv = new Menu("load csv file");
+		Menu manual = new Menu("manual");
+		
+		MenuItem load_csv = new MenuItem("load csv to gameboard");
+		MenuItem run_csv = new MenuItem("run");
+		
+		MenuItem add_p = new MenuItem("add packmans");
+		MenuItem add_f = new MenuItem("add fruits");
+		MenuItem run_manual = new MenuItem("run");
 
-		menuBar.add(menu);
-		menu.add(item1);
-		menu.add(item2);
+		menuBar.add(csv);
+		menuBar.add(manual);
+		
+		csv.add(load_csv);
+		csv.add(run_csv);
+		
+		manual.add(add_p);
+		manual.add(add_f);
+		manual.add(run_manual);
+		
 		this.setMenuBar(menuBar);
 
 		try {
@@ -61,10 +76,10 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener, A
 
 	}
 
-	int x = -1;
-	int y = -1;
+	private int x = -1;
+	private int y = -1;
 
-	ArrayList<Point2D> fruits = new ArrayList<Point2D>();
+	private ArrayList<Point2D> fruits = new ArrayList<Point2D>();
 
 	public void paint(Graphics g)
 	{
@@ -76,8 +91,9 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener, A
 			while(it.hasNext()) {
 				Point2D current =it.next();
 				int r = 20;
-				x = (int)(getWidth() * current.x)-7;
-				y = (int)(getHeight() * current.y)-7;
+				Point p = Ratio.ratio2Pixel(getWidth(), getHeight(), current);
+				x = p.x-8;
+				y = p.y-8;
 				g.setColor(Color.YELLOW);
 				g.fillOval(x, y, r, r);
 			}
@@ -92,12 +108,8 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener, A
 		x = arg.getX();
 		y = arg.getY();
 		Point p = new Point(x, y);
-		double a =Ratio.pixel2Width(getWidth(), getHeight(), p);
- 		double b = Ratio.pixel2Height(getWidth(), getHeight(), p);
- 		Point2D point2D = new Point2D();
- 	    point2D.x = (float)a;
- 	    point2D.y= (float) b;
- 	    fruits.add(point2D);
+ 		Point2D ratio = Ratio.pixel2Ratio(getWidth(), getHeight(), p);
+ 	    fruits.add(ratio);
 		repaint();
 	}
 
