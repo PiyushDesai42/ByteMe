@@ -9,4 +9,8 @@ public class Fruit {
 	public Fruit(Lat_lon_alt gps) {
 		this.gps_point = new Lat_lon_alt(gps);
 	}
+
+	public Lat_lon_alt getGps_point() {
+		return gps_point;
+	}
 }

@@ -19,12 +19,19 @@ public class Packman {
 		}
 	}
 	
-	public Packman(Lat_lon_alt gps, double orien) throws RuntimeException{
+	public Packman(Lat_lon_alt gps) throws RuntimeException{
 		this.gps_point = new Lat_lon_alt(gps);
 		this.meters_per_sec = 1;
 		this.radius = 1;
-		this.orientation = orien;
+		this.orientation = 0;
 		
+	}
+	
+	public Packman(Packman ot) {
+		this.gps_point = new Lat_lon_alt(ot.gps_point);
+		this.meters_per_sec = ot.meters_per_sec;
+		this.radius = ot.radius;
+		this.orientation = ot.orientation;
 	}
 
 	public Lat_lon_alt getGps_point() {

@@ -14,6 +14,14 @@ public class Map {
 		gps_min = new Lat_lon_alt(min);
 		gps_max = new Lat_lon_alt(max);
 	}
+	
+
+	public Map(Map ot) {
+		image = ot.image;
+		gps_min = new Lat_lon_alt(ot.gps_min);
+		gps_max = new Lat_lon_alt(ot.gps_max);
+	}
+	
 
 	public Lat_lon_alt getGps_min() {
 		return gps_min;

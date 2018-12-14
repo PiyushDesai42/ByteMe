@@ -25,7 +25,7 @@ import javax.swing.event.MenuListener;
 
 import com.sun.javafx.geom.Point2D;
 
-import algo.Ratio;
+import convert.Ratio;
 
 
 
