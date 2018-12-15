@@ -46,6 +46,19 @@ public class Game {
 		}
 	}
 
+	public Game(Game ot) {
+		Iterator<Packman> it_p = ot.packmans.iterator();
+		while(it_p.hasNext()) {
+			packmans.add(it_p.next());
+		}
+
+		Iterator<Fruit> it_f = ot.fruits.iterator();
+		while(it_f.hasNext()) {
+			fruits.add(it_f.next());
+		}
+	}
+	
+	
 	public boolean add_packman(Packman p) {
 		return packmans.add(p);
 	}
