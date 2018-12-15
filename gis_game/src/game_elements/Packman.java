@@ -19,6 +19,18 @@ public class Packman {
 		}
 	}
 	
+	public Packman(Lat_lon_alt gps, double speed, double r) throws RuntimeException{
+		this.gps_point = new Lat_lon_alt(gps);
+		this.meters_per_sec = speed;
+		this.radius = r;
+		this.orientation = 0;
+		if(orientation<-180 || orientation>180) {
+			throw new RuntimeException("invalid orientation!");
+		}
+	}
+	
+	
+	
 	public Packman(Lat_lon_alt gps) throws RuntimeException{
 		this.gps_point = new Lat_lon_alt(gps);
 		this.meters_per_sec = 1;
