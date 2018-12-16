@@ -25,14 +25,6 @@ public class Ratio {
 	}
 
 	
-	public static double lat_lon2Width_ratio(Map map, Lat_lon_alt gps_point) {
-		return lat_lon_to_ratio(map.getGps_min(), map.getGps_max(), gps_point)[0];
-	}
-	
-	
-	public static double lat_lon2Height_ratio(Map map, Lat_lon_alt gps_point) {
-		return lat_lon_to_ratio(map.getGps_min(), map.getGps_max(), gps_point)[1];
-	}
 	
 
 	public static Point2D lat_lon2Ratio(Map map, Lat_lon_alt gps_point) {
@@ -43,32 +35,9 @@ public class Ratio {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-
-	public static double pixel2Width_ratio(double full_width, double full_height, Point p) {
-		return p.x/full_width;
-	}
-	
-	
-	public static double pixel2Height_ratio(double full_width, double full_height, Point p) {
-		return p.y/full_height;
-	}
-	
-	
 	public static Point2D pixel2Ratio(double full_width, double full_height, Point p) {
 		return new Point2D((float)(p.x/full_width), (float)(p.y/full_height));
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	

@@ -13,10 +13,10 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
@@ -24,7 +24,9 @@ import javax.swing.event.MenuListener;
 import com.sun.javafx.geom.Point2D;
 
 import Coords.Lat_lon_alt;
+import File_format.Csv2Game;
 import algo.Solution;
+import convert.Game_in_ratio;
 import convert.Ratio;
 import game_elements.Fruit;
 import game_elements.Game;
@@ -39,15 +41,18 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 	private Map map = null;
 	private Game game = null;
 	private Solution solution = null;
+	private Game_in_ratio ratio = null;
 
 	public MainWindow() 
 	{
 		initGUI();
-		game = new Game();
+		this.addMouseListener(this); 
 		Lat_lon_alt min = new Lat_lon_alt(32.10190,35.20236,0);
 		Lat_lon_alt max = new Lat_lon_alt(32.10582,35.21234,0);
 		map = new Map(myImage, min, max);
-		this.addMouseListener(this); 
+		game = new Game();
+		ratio = new Game_in_ratio();
+		solution = new Solution(game);
 	}
 
 	private void initGUI() 
@@ -64,13 +69,15 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 	private void initMENU() {
 		MenuBar menuBar = new MenuBar();
 
-		Menu csv = new Menu("load csv file");
+		Menu files = new Menu("files");
 		Menu manual = new Menu("manual");
 
-		MenuItem load_csv = new MenuItem("load csv to gameboard");
+		MenuItem load_csv = new MenuItem("load csv");
 		load_csv(load_csv);
-		MenuItem run_csv = new MenuItem("run");
-		run_csv(run_csv);
+		MenuItem create_csv = new MenuItem("create csv");
+		create_csv(create_csv);
+		MenuItem create_kml = new MenuItem("create kml");
+		create_kml(create_kml);
 
 		MenuItem add_p = new MenuItem("add packmans");
 		add_p(add_p);
@@ -79,11 +86,12 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 		MenuItem run_manual = new MenuItem("run");
 		run_manual(run_manual);
 
-		menuBar.add(csv);
+		menuBar.add(files);
 		menuBar.add(manual);
 
-		csv.add(load_csv);
-		csv.add(run_csv);
+		files.add(load_csv);
+		files.add(create_csv);
+		files.add(create_kml);
 
 		manual.add(add_p);
 		manual.add(add_f);
@@ -97,26 +105,51 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 
 
 
+
+
 	private void load_csv(MenuItem load_csv) {
 		load_csv.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				//				FileChooser fc = new FileChooser();
+			public void actionPerformed(ActionEvent e) {	
+				JFileChooser chooser = new JFileChooser();
+				int returnVal = chooser.showOpenDialog(getParent());
+				if(returnVal == JFileChooser.APPROVE_OPTION) {
+					System.out.println("You chose to open this file: " +
+							chooser.getSelectedFile().getName());
+					String path = chooser.getSelectedFile().getPath();
+					to_game(path);
+				}
+			}
+
+			private void to_game(String path) {
+				Csv2Game csv2game = new Csv2Game(path);
+				try {
+					Game g = csv2game.run();
+					game.add_game(g);
+					ratio.add_game(g, map);
+				} catch (IOException e1) {
+					System.out.println("invalid file!");
+				}				
 			}
 		});
 	}
 
 
-	private void run_csv(MenuItem run_csv) {
-		run_csv.addActionListener(new ActionListener() {
+	private void create_csv(MenuItem create_csv) {
+		create_csv.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 			}
 		});
+	}
+
+
+	private void create_kml(MenuItem create_kml) {
+		// TODO Auto-generated method stub
+
 	}
 
 
@@ -153,40 +186,40 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 
 
 	private String packman_or_fruit = "";
-	private int x = -1;
-	private int y = -1;
+	private int x;
+	private int y;
 
-	private ArrayList<Point2D> fruits = new ArrayList<Point2D>();
-	private ArrayList<Point2D> packmans = new ArrayList<Point2D>();
+	//	private ArrayList<Point2D> fruits = new ArrayList<Point2D>();
+	//	private ArrayList<Point2D> packmans = new ArrayList<Point2D>();
 
 	public void paint(Graphics g)
 	{
 		g.drawImage(myImage, 0, 0,getWidth()-8,getHeight()-8, this);
 
-		if(x!=-1 && y!=-1)
-		{
-			Iterator<Point2D> it_p = packmans.iterator();
-			while(it_p.hasNext()) {
-				Point2D current =it_p.next();
-				int r = 20;
-				Point p = Ratio.ratio2Pixel(getWidth(), getHeight(), current);
-				x = p.x-8;
-				y = p.y-8;
-				g.setColor(Color.YELLOW);
-				g.fillOval(x, y, r, r);
-			}
-
-			Iterator<Point2D> it_f = fruits.iterator();
-			while(it_f.hasNext()) {
-				Point2D current =it_f.next();
-				int r = 12;
-				Point p = Ratio.ratio2Pixel(getWidth(), getHeight(), current);
-				x = p.x-4;
-				y = p.y-4;
-				g.setColor(Color.red);
-				g.fillOval(x, y, r, r);
-			}
+		//		if(x!=-1 && y!=-1)
+		//		{
+		Iterator<Point2D> it_p = ratio.getPackmans().iterator();
+		while(it_p.hasNext()) {
+			Point2D current =it_p.next();
+			int r = 20;
+			Point p = Ratio.ratio2Pixel(getWidth(), getHeight(), current);
+			x = p.x-8;
+			y = p.y-8;
+			g.setColor(Color.YELLOW);
+			g.fillOval(x, y, r, r);
 		}
+
+		Iterator<Point2D> it_f = ratio.getFruits().iterator();
+		while(it_f.hasNext()) {
+			Point2D current =it_f.next();
+			int r = 12;
+			Point p = Ratio.ratio2Pixel(getWidth(), getHeight(), current);
+			x = p.x-4;
+			y = p.y-4;
+			g.setColor(Color.red);
+			g.fillOval(x, y, r, r);
+		}
+		//		}
 	}
 
 	@Override
@@ -215,9 +248,9 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 			x = e.getX();
 			y = e.getY();
 			Point p = new Point(x, y);
-			Point2D ratio = Ratio.pixel2Ratio(getWidth(), getHeight(), p);
-			packmans.add(ratio);
-			Packman packman = new Packman(Ratio.ratio2Lat_lon(map, ratio));
+			Point2D p2D = Ratio.pixel2Ratio(getWidth(), getHeight(), p);
+			ratio.add_packman(p2D);
+			Packman packman = new Packman(Ratio.ratio2Lat_lon(map, p2D));
 			game.add_packman(packman);
 			repaint();
 		}
@@ -227,9 +260,9 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 			x = e.getX();
 			y = e.getY();
 			Point p = new Point(x, y);
-			Point2D ratio = Ratio.pixel2Ratio(getWidth(), getHeight(), p);
-			fruits.add(ratio);
-			Fruit fruit = new Fruit(Ratio.ratio2Lat_lon(map, ratio));
+			Point2D p2D = Ratio.pixel2Ratio(getWidth(), getHeight(), p);
+			ratio.add_fruit(p2D);
+			Fruit fruit = new Fruit(Ratio.ratio2Lat_lon(map, p2D));
 			game.add_fruit(fruit);
 			repaint();
 		}
@@ -238,7 +271,7 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-
+		repaint();
 	}
 
 	@Override

@@ -15,15 +15,19 @@ public class Game {
 	}
 
 	public Game(ArrayList<Packman> p, ArrayList<Fruit> f) {
-		Iterator<Packman> it_p = p.iterator();
-		while(it_p.hasNext()) {
-			packmans.add(it_p.next());
-		}
-
-		Iterator<Fruit> it_f = f.iterator();
-		while(it_f.hasNext()) {
-			fruits.add(it_f.next());
-		}
+		fruits = new ArrayList<Fruit>();
+		packmans = new ArrayList<Packman>();
+		packmans.addAll(p);
+		fruits.addAll(f);
+//		Iterator<Packman> it_p = p.iterator();
+//		while(it_p.hasNext()) {
+//			packmans.add(it_p.next());
+//		}
+//
+//		Iterator<Fruit> it_f = f.iterator();
+//		while(it_f.hasNext()) {
+//			fruits.add(it_f.next());
+//		}
 	}
 
 	public Game(ArrayList<Object> arr) {
@@ -67,7 +71,10 @@ public class Game {
 		return fruits.add(f);
 	}
 
-
+	public boolean add_game(Game g) {
+		return packmans.addAll(g.packmans) || fruits.addAll(g.fruits);
+	}
+	
 
 	public ArrayList<Fruit> getFruits() {
 		return fruits;
