@@ -59,8 +59,13 @@ public class Solution {
 		return paths.add(p);
 	}
 	
-	
+
+	public void setPaths(ArrayList<Path> paths) {
+		this.paths = paths;
+	}
+
 	public ArrayList<Path> getPaths() {
 		return paths;
 	}
+	
 }

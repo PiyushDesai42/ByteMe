@@ -1,15 +1,15 @@
 package game_elements;
 
-import javax.imageio.ImageIO;
+import java.awt.Image;
 
 import Coords.Lat_lon_alt;
 
 public class Map {
 
 	private Lat_lon_alt gps_min, gps_max;
-	private ImageIO image;
+	private Image image;
 
-	public Map(ImageIO img, Lat_lon_alt min, Lat_lon_alt max) {
+	public Map(Image img, Lat_lon_alt min, Lat_lon_alt max) {
 		image = img;
 		gps_min = new Lat_lon_alt(min);
 		gps_max = new Lat_lon_alt(max);
@@ -39,7 +39,7 @@ public class Map {
 		this.gps_max = gps_max;
 	}
 
-	public void setImage(ImageIO img) {
+	public void setImage(Image img) {
 		this.image = img;
 	}
 	
