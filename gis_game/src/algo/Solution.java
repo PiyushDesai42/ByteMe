@@ -51,7 +51,7 @@ public class Solution {
 	
 	private double seconds_to_fruit(Packman p, Fruit f) {
 		MyCoords coords = new MyCoords();
-		return p.getMeters_per_sec()*coords.distance3D(p.getGps_point(), f.getGps_point());
+		return p.getMeters_per_sec()*(coords.distance3D(p.getGps_point(), f.getGps_point())-p.getRadius());
 	}
 	
 	
