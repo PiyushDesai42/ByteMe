@@ -19,15 +19,6 @@ public class Game {
 		packmans = new ArrayList<Packman>();
 		packmans.addAll(p);
 		fruits.addAll(f);
-//		Iterator<Packman> it_p = p.iterator();
-//		while(it_p.hasNext()) {
-//			packmans.add(it_p.next());
-//		}
-//
-//		Iterator<Fruit> it_f = f.iterator();
-//		while(it_f.hasNext()) {
-//			fruits.add(it_f.next());
-//		}
 	}
 
 	public Game(ArrayList<Object> arr) {
@@ -51,6 +42,8 @@ public class Game {
 	}
 
 	public Game(Game ot) {
+		fruits = new ArrayList<Fruit>();
+		packmans = new ArrayList<Packman>();
 		Iterator<Packman> it_p = ot.packmans.iterator();
 		while(it_p.hasNext()) {
 			packmans.add(it_p.next());
@@ -71,8 +64,9 @@ public class Game {
 		return fruits.add(f);
 	}
 
-	public boolean add_game(Game g) {
-		return packmans.addAll(g.packmans) || fruits.addAll(g.fruits);
+	public void add_game(Game g) {
+		packmans.addAll(g.packmans);
+		fruits.addAll(g.fruits);
 	}
 	
 
@@ -83,6 +77,11 @@ public class Game {
 
 	public ArrayList<Packman> getPackmans() {
 		return packmans;
+	}
+	
+	public void clear() {
+		packmans.clear();
+		fruits.clear();
 	}
 
 }

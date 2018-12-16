@@ -14,7 +14,7 @@ public class Ratio {
 		double[] width_height = new double[2];
 		//finding width ratio of gps_min to gps_point out of the full width between gps_min to gps_max
 		double full_width = gps_max.y()-gps_min.y();
-		double partial_width = gps_point.y()-gps_min.y();
+		double partial_width = gps_max.y()-gps_point.y();
 		width_height[0] = partial_width/full_width;
 		//finding height ratio of gps_min to gps_point out of the full height between gps_min to gps_max
 		double full_height = gps_max.x()-gps_min.x();
@@ -48,7 +48,7 @@ public class Ratio {
 		double max_lon = map.getGps_max().y();
 		
 		double new_lat = min_lat + (max_lat-min_lat)*ratio.y;
-		double new_lon = min_lon + (max_lon-min_lon)*ratio.x;
+		double new_lon = min_lon + (max_lon-min_lon)*(ratio.x);
 		
 		return new Lat_lon_alt(new_lat, new_lon, 0);
 	}

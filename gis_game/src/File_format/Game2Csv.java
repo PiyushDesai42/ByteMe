@@ -1,6 +1,5 @@
 package File_format;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -29,7 +28,7 @@ public class Game2Csv {
 	private void write_start() throws IOException {
 		int p_size = game.getPackmans().size();
 		int f_size = game.getFruits().size();
-		writer.write("Type,id,Lat,Lon,Alt,Speed/Weight,Radius,"+ p_size +","+ f_size +"\n");
+		writer.write("Type,id,Lat,Lon,Alt,Speed/Weight,Radius,"+ p_size +","+ f_size +"\r\n");
 	}
 
 	private void write_body() throws IOException {
@@ -52,7 +51,7 @@ public class Game2Csv {
 
 			double weight = current_p.getMeters_per_sec();
 			double radius = current_p.getRadius();
-			writer.write(weight + "," + radius + ",,\\n");
+			writer.write(weight + "," + radius + ",,\n");
 		}
 
 		Iterator<Fruit> it_f = fruits.iterator();

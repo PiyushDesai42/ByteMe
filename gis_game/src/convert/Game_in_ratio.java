@@ -66,5 +66,10 @@ public class Game_in_ratio {
 	public ArrayList<Point2D> getPackmans() {
 		return packmans;
 	}
+	
+	public void clear() {
+		packmans.clear();
+		fruits.clear();
+	}
 
 }

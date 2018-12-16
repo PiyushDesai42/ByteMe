@@ -25,6 +25,7 @@ import com.sun.javafx.geom.Point2D;
 
 import Coords.Lat_lon_alt;
 import File_format.Csv2Game;
+import File_format.Game2Csv;
 import algo.Solution;
 import convert.Game_in_ratio;
 import convert.Ratio;
@@ -83,6 +84,8 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 		add_p(add_p);
 		MenuItem add_f = new MenuItem("add fruits");
 		add_f(add_f);
+		MenuItem clear = new MenuItem("clear");
+		clear(clear);
 		MenuItem run_manual = new MenuItem("run");
 		run_manual(run_manual);
 
@@ -95,11 +98,13 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 
 		manual.add(add_p);
 		manual.add(add_f);
+		manual.add(clear);
 		manual.add(run_manual);
 
 		this.setMenuBar(menuBar);
 
 	}
+
 
 
 
@@ -141,7 +146,27 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				JFileChooser chooser = new JFileChooser();
+				chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				chooser.setAcceptAllFileFilterUsed(false);
+				int returnVal = chooser.showOpenDialog(getParent());
+				if(returnVal == JFileChooser.APPROVE_OPTION) {
+					System.out.println("You chose this folder: " +
+							chooser.getSelectedFile().getName());
+					String path = chooser.getSelectedFile().getPath();
+					to_csv(path);
+				}
+			}
+
+			private void to_csv(String path) {
+				String new_path = path + "\\game.csv";
+				int counter = 1;
+				while(new File(new_path).isFile()) {
+					new_path = path + "\\game"+counter+".csv";
+					counter++;
+				}
+				Game2Csv game2csv = new Game2Csv(new_path, game);
+				game2csv.run();
 			}
 		});
 	}
@@ -178,6 +203,16 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 	}
 
 
+	private void clear(MenuItem clear) {
+		clear.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				game.clear();
+				ratio.clear();
+			}
+		});
+	}
 
 	private void run_manual(MenuItem run_manual) {
 		// TODO Auto-generated method stub
@@ -186,18 +221,13 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 
 
 	private String packman_or_fruit = "";
-	private int x;
-	private int y;
 
-	//	private ArrayList<Point2D> fruits = new ArrayList<Point2D>();
-	//	private ArrayList<Point2D> packmans = new ArrayList<Point2D>();
 
 	public void paint(Graphics g)
 	{
+		int x, y;
 		g.drawImage(myImage, 0, 0,getWidth()-8,getHeight()-8, this);
 
-		//		if(x!=-1 && y!=-1)
-		//		{
 		Iterator<Point2D> it_p = ratio.getPackmans().iterator();
 		while(it_p.hasNext()) {
 			Point2D current =it_p.next();
@@ -219,7 +249,6 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 			g.setColor(Color.red);
 			g.fillOval(x, y, r, r);
 		}
-		//		}
 	}
 
 	@Override
@@ -242,6 +271,7 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		int x, y;
 		if(packman_or_fruit.equals("packman")) {
 			System.out.println("packman added!");
 			System.out.println("("+ e.getX() + "," + e.getY() +")");
