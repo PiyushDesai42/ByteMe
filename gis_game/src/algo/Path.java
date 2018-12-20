@@ -16,13 +16,13 @@ public class Path {
 	
 	public Path(Packman p) {
 		time = 0;
-		packman = new Packman(p);
+		packman = p;
 		fruits = new ArrayList<Fruit>();
 	}
 	
 	public Path(Packman p, ArrayList<Fruit> f) {
 		time = 0;
-		packman = new Packman(p);
+		packman = p;
 		fruits = new ArrayList<Fruit>();
 		Iterator<Fruit> it = f.iterator();
 		while(it.hasNext()) {
@@ -32,7 +32,8 @@ public class Path {
 	
 	public Path(Path ot) {
 		time = ot.time;
-		packman = new Packman(ot.packman);
+		packman = ot.packman;
+		fruits = new ArrayList<Fruit>();
 		Iterator<Fruit> it = ot.fruits.iterator();
 		while(it.hasNext()) {
 			fruits.add(it.next());

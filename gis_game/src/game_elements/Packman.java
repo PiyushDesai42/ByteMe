@@ -51,7 +51,7 @@ public class Packman {
 	}
 
 	public void setGps_point(Lat_lon_alt gps_point) {
-		this.gps_point = gps_point;
+		this.gps_point = new Lat_lon_alt(gps_point);
 	}
 
 	public double getOrientation() {
