@@ -13,8 +13,12 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
@@ -226,16 +230,19 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 	}
 
 	private class Two_lat_lon_alt{
+		private Color c;
 		private Lat_lon_alt gps0;
 		private Lat_lon_alt gps1;
 
-		public Two_lat_lon_alt(Lat_lon_alt gps0, Lat_lon_alt gps1) {
+		public Two_lat_lon_alt(Lat_lon_alt gps0, Lat_lon_alt gps1, Color c) {
 			this.gps0 = new Lat_lon_alt(gps0);
 			this.gps1 = new Lat_lon_alt(gps1);
+			this.c = c;
 		}
 
 	}
 
+	private final Lock lock = new ReentrantLock();
 	private ArrayList<Two_lat_lon_alt> lines = new ArrayList<Two_lat_lon_alt>();
 
 	private void run_manual(MenuItem run_manual) {
@@ -251,6 +258,7 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 
 
 				class run_path implements Runnable{
+
 					private Path path;
 					public run_path(Path path) {
 						this.path=path;
@@ -258,10 +266,17 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 
 					@Override
 					public void run() {
+
+						Random rand = new Random();
+						float r = rand.nextFloat();
+						float g = rand.nextFloat();
+						float b = rand.nextFloat();
+						Color randomColor = new Color(r, g, b);
+
 						MyCoords coords = new MyCoords();
 						Packman packman = path.getPackman();
 						Iterator<Fruit> it = path.getFruits().iterator();
-						while(it.hasNext()) {
+						while(run.equals("run") && it.hasNext()) {
 							Lat_lon_alt original_p = new Lat_lon_alt(packman.getGps_point());
 							Fruit current_fruit = it.next();
 							Gps_vector vector = coords.vector3D(packman.getGps_point(), current_fruit.getGps_point());
@@ -270,7 +285,8 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 							double step_lat = unit_vector.x() * packman.getMeters_per_sec();
 							double step_lon = unit_vector.y() * packman.getMeters_per_sec();			
 							Gps_vector step_vector = new Gps_vector(step_lat, step_lon, 0);
-							while(coords.distance3D(packman.getGps_point(), current_fruit.getGps_point())>packman.getRadius()) {
+							while(run.equals("run") &&
+									coords.distance3D(packman.getGps_point(), current_fruit.getGps_point())>packman.getRadius()) {
 								Lat_lon_alt new_gps_point = coords.add(packman.getGps_point(), step_vector);
 								try {
 
@@ -281,30 +297,35 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 								packman.setGps_point(new_gps_point);
 								repaint();
 							}
-							lines.add(new Two_lat_lon_alt(original_p, packman.getGps_point()));
+							try {
+								lock.lock();
+								lines.add(new Two_lat_lon_alt(original_p, packman.getGps_point(),randomColor));
+							} finally {
+								lock.unlock();
+							}
 						}
-						System.out.println("Congradulations!\n"
-								+ "you managed to eat all of the fruit in: "+solution.getTime()+" seconds!");
-
 					}
+
 				}
 
-
-
+				ArrayList<Thread> threads = new ArrayList<Thread>();
 				Iterator<Path> it = solution.getPaths().iterator();
 				while(it.hasNext()) {
 					run_path r = new run_path(it.next());
-					Thread t = new Thread(r);
-					t.start();
+					threads.add( new Thread(r));
 				}
-				
+				Iterator<Thread> itt = threads.iterator();
+				while(itt.hasNext()) {
+					itt.next().start();
+				}
 
+				System.out.println("Congradulations!\n"
+						+ "you managed to eat all of the fruit in: "+solution.getTime()+" seconds!");
 
 
 			}
 		});
 	}
-
 
 	private String packman_or_fruit = "none";
 	private String run = "don't_run";
@@ -340,20 +361,29 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 			g.fillOval(x, y, getWidth()/100, getHeight()/50);
 		}
 
+		try {
+			lock.lock();
 
-		if(run.equals("run")) {
-			Point p1 = new Point();
-			Point p2 = new Point();
-			Iterator<Two_lat_lon_alt> it = lines.iterator();
-			while (it.hasNext()) {
-				Two_lat_lon_alt double_gps = it.next();
-				p1 = Ratio.lat_lon2Pixel(map, double_gps.gps0, getWidth(), getHeight());
-				p2 = 	Ratio.lat_lon2Pixel(map, double_gps.gps1, getWidth(), getHeight());
-				g.drawLine(p1.x, p1.y, p2.x, p2.y);
+			if(run.equals("run")) {
+				Point p1 = new Point();
+				Point p2 = new Point();
+
+
+
+				Iterator<Two_lat_lon_alt> it = lines.iterator();
+				while (it.hasNext()) {
+					Two_lat_lon_alt double_gps = it.next();
+					p1 = Ratio.lat_lon2Pixel(map, double_gps.gps0, getWidth(), getHeight());
+					p2 = 	Ratio.lat_lon2Pixel(map, double_gps.gps1, getWidth(), getHeight());
+					g.setColor(double_gps.c);
+					g.drawLine(p1.x, p1.y, p2.x, p2.y);
+				}
 			}
-		}
-		else {
-			lines.clear();
+			else {
+				lines.clear();
+			}
+		} finally {
+			lock.unlock();
 		}
 	}
 

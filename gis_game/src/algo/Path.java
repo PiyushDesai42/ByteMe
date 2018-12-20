@@ -3,6 +3,7 @@ package algo;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import Coords.Lat_lon_alt;
 import game_elements.Fruit;
 import game_elements.Packman;
 
@@ -58,6 +59,17 @@ public class Path {
 
 	public ArrayList<Fruit> getFruits() {
 		return fruits;
+	}
+	
+	public Lat_lon_alt place_at_time(double current_time) {
+		double time_counter = 0;
+		Lat_lon_alt first_point = packman.getGps_point();
+		Iterator<Fruit> it_f = fruits.iterator();
+		while(it_f.hasNext()) {
+			
+		}
+		
+		return null;
 	}
 
 }
