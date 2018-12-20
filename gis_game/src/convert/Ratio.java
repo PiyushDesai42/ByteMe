@@ -3,7 +3,6 @@ package convert;
 import java.awt.Point;
 
 import com.sun.javafx.geom.Point2D;
-
 import Coords.Gps_vector;
 import Coords.Lat_lon_alt;
 import Coords.MyCoords;
@@ -12,9 +11,7 @@ import game_elements.Map;
 public class Ratio {
 	
 
-	public static Point2D lat_lon2Ratio(Map map, Lat_lon_alt gps_point) {
-		Lat_lon_alt gps_min = map.getGps_min();
-		Lat_lon_alt gps_max = map.getGps_max();
+	public static Point2D lat_lon2Ratio(Lat_lon_alt gps_min, Lat_lon_alt gps_max, Lat_lon_alt gps_point) {
 		//finding width ratio of gps_min to gps_point out of the full width between gps_min to gps_max
 		double full_width = gps_max.y()-gps_min.y();
 		double partial_width = gps_point.y()-gps_min.y();
@@ -35,11 +32,11 @@ public class Ratio {
 
 
 
-	public static Lat_lon_alt ratio2Lat_lon(Map map, Point2D ratio) {
-		double min_lat = map.getGps_min().x();
-		double min_lon = map.getGps_min().y();
-		double max_lat = map.getGps_max().x();
-		double max_lon = map.getGps_max().y();
+	public static Lat_lon_alt ratio2Lat_lon(Lat_lon_alt gps_min, Lat_lon_alt gps_max, Point2D ratio) {
+		double min_lat = gps_min.x();
+		double min_lon = gps_min.y();
+		double max_lat = gps_max.x();
+		double max_lon = gps_max.y();
 
 		double new_lat = min_lat + (max_lat-min_lat)*(1-ratio.y);
 		double new_lon = min_lon + (max_lon-min_lon)*ratio.x;
@@ -60,11 +57,11 @@ public class Ratio {
 
 	public static Lat_lon_alt pixel2Lat_lon(Map map, int full_width, int full_height, Point pixels) {
 		Point2D ratio = pixel2Ratio(full_width,full_height,pixels);
-		return ratio2Lat_lon(map, ratio);
+		return ratio2Lat_lon(map.getGps_min(),map.getGps_max(), ratio);
 	}
 
 	public static Point lat_lon2Pixel(Map map, Lat_lon_alt gps_point, int full_width, int full_height) {
-		Point2D ratio = lat_lon2Ratio(map,gps_point);
+		Point2D ratio = lat_lon2Ratio(map.getGps_min(),map.getGps_max(),gps_point);
 		return ratio2Pixel(full_width, full_height, ratio);
 	}
 

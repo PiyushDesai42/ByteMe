@@ -13,7 +13,6 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
@@ -267,6 +266,41 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 					@Override
 					public void run() {
 
+						//						Random rand = new Random();
+						//						float r = rand.nextFloat();
+						//						float g = rand.nextFloat();
+						//						float b = rand.nextFloat();
+						//						Color randomColor = new Color(r, g, b);
+						//						
+						//						double time_counter = 1;
+						//						Lat_lon_alt first = path.getPackman().getGps_point();
+						//						while (run.equals("run") && path.place_at_time(time_counter)!=null){
+						//							Lat_lon_alt second = path.place_at_time(time_counter);
+						//
+						//							try {
+						//
+						//								Thread.sleep(30);
+						//							} catch (InterruptedException e) {
+						//								e.printStackTrace();
+						//							}
+						//							
+						//							path.getPackman().setGps_point(second);
+						//
+						//
+						//							try {
+						//								lock.lock();
+						//								lines.add(new Two_lat_lon_alt(first, second,randomColor));
+						//							} finally {
+						//								lock.unlock();
+						//							}
+						//							repaint();
+						//
+						//							first = second;
+						//							time_counter++;
+						//						}
+
+
+
 						Random rand = new Random();
 						float r = rand.nextFloat();
 						float g = rand.nextFloat();
@@ -289,7 +323,6 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 									coords.distance3D(packman.getGps_point(), current_fruit.getGps_point())>packman.getRadius()) {
 								Lat_lon_alt new_gps_point = coords.add(packman.getGps_point(), step_vector);
 								try {
-
 									Thread.sleep(10);
 								} catch (InterruptedException e) {
 									e.printStackTrace();
@@ -367,8 +400,6 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 			if(run.equals("run")) {
 				Point p1 = new Point();
 				Point p2 = new Point();
-
-
 
 				Iterator<Two_lat_lon_alt> it = lines.iterator();
 				while (it.hasNext()) {

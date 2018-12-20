@@ -40,12 +40,6 @@ public class MyCoords implements coords_converter{
 		double alt = gps.z() + vector.z();
 		
 		return new Lat_lon_alt(lat, lon, alt);
-//		//calculating the new lat lon alt
-//		double lat = gps.x() + toDeg(vector.y()/earthRadius);
-//		double lon = gps.y() + toDeg(vector.x()/earthRadius)/Math.cos(toRad(gps.x()));
-//		double alt = gps.z() + vector.z();
-//		//return new gps point
-//		return new Lat_lon_alt(lat,lon,alt);
 	}
 
 
@@ -63,7 +57,7 @@ public class MyCoords implements coords_converter{
 		Lat_lon_alt rad = toRad(diff);
 		//calculates the distance between the two x's y's and z's in meters
 		double xMeters = Math.sin(rad.x())*earthRadius;
-		double yMeters = Math.sin(rad.y())*earthRadius*Math.cos(gps0.x()*Math.PI/180);
+		double yMeters = Math.sin(rad.y())*earthRadius*Math.cos(toRad(gps0.x()));
 		double zMeters = rad.z();
 		//return the vector
 		return new Gps_vector(xMeters,yMeters,zMeters);
