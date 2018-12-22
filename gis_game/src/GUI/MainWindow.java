@@ -30,6 +30,7 @@ import Coords.Lat_lon_alt;
 import Coords.MyCoords;
 import File_format.Csv2Game;
 import File_format.Game2Csv;
+import File_format.Solution2Kml;
 import algo.Path;
 import algo.Solution;
 import convert.Ratio;
@@ -47,7 +48,7 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 	private Map map = null;
 	private Game game = null;
 	private Solution solution = null;
-
+	
 	public MainWindow() 
 	{
 		initGUI();
@@ -164,11 +165,16 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 					System.out.println("You chose this folder: " +
 							chooser.getSelectedFile().getName());
 					String path = chooser.getSelectedFile().getPath();
-					to_csv(path);
+					try {
+						to_csv(path);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
 
-			private void to_csv(String path) {
+			private void to_csv(String path) throws IOException {
 				String new_path = path + "\\game.csv";
 				int counter = 1;
 				while(new File(new_path).isFile()) {
@@ -183,8 +189,41 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 
 
 	private void create_kml(MenuItem create_kml) {
-		// TODO Auto-generated method stub 				packman_or_fruit = "none"; 		run = "don't_run";
+		create_kml.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				packman_or_fruit = "none";
+				run = "don't_run";
+				JFileChooser chooser = new JFileChooser();
+				chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				chooser.setAcceptAllFileFilterUsed(false);
+				int returnVal = chooser.showOpenDialog(getParent());
+				if(returnVal == JFileChooser.APPROVE_OPTION) {
+					System.out.println("You chose this folder: " +
+							chooser.getSelectedFile().getName());
+					String path = chooser.getSelectedFile().getPath();
+					to_kml(path);
+				}
+			}
+
+			private void to_kml(String path) {
+				String new_path = path + "\\solution.kml";
+				int counter = 1;
+				while(new File(new_path).isFile()) {
+					new_path = path + "\\solution"+counter+".kml";
+					counter++;
+				}
+				Solution2Kml solution2kml;
+				try {
+					solution2kml = new Solution2Kml(new_path, game, solution);
+					solution2kml.run();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 
@@ -316,11 +355,11 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 							Gps_vector vector = coords.vector3D(packman.getGps_point(), current_fruit.getGps_point());
 							double vector_size = Math.sqrt(vector.x()*vector.x()+vector.y()*vector.y());
 							Gps_vector unit_vector = new Gps_vector(vector.x()/vector_size, vector.y()/vector_size, 0);
-							double step_lat = unit_vector.x() * packman.getMeters_per_sec();
-							double step_lon = unit_vector.y() * packman.getMeters_per_sec();			
+							double step_lat = unit_vector.x()*packman.getMeters_per_sec();
+							double step_lon = unit_vector.y()* packman.getMeters_per_sec();			
 							Gps_vector step_vector = new Gps_vector(step_lat, step_lon, 0);
 							while(run.equals("run") &&
-									coords.distance3D(packman.getGps_point(), current_fruit.getGps_point())>packman.getRadius()) {
+									coords.distance3D(packman.getGps_point(), current_fruit.getGps_point())>packman.getRadius()+2) {
 								Lat_lon_alt new_gps_point = coords.add(packman.getGps_point(), step_vector);
 								try {
 									Thread.sleep(10);
@@ -372,8 +411,8 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 		while(it_p.hasNext()) {
 			Packman current_p =it_p.next();
 			Point p = Ratio.lat_lon2Pixel(map, current_p.getGps_point(), getWidth(), getHeight());
-			x = p.x-15;
-			y = p.y-15;
+			x = p.x-10;
+			y = p.y-10;
 			BufferedImage P_Image=null;
 			try {
 				P_Image = ImageIO.read(new File("pacman.png"));
@@ -381,17 +420,24 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			g.drawImage(P_Image, x, y, getWidth()/50, getHeight()/30,this);
+			g.drawImage(P_Image, x, y, getWidth()/40, getHeight()/20,this);
 		}
 
 		Iterator<Fruit> it_f = game.getFruits().iterator();
 		while(it_f.hasNext()) {
 			Fruit current_f =it_f.next();
 			Point p = Ratio.lat_lon2Pixel(map, current_f.getGps_point(), getWidth(), getHeight());
-			x = p.x-4;
-			y = p.y-4;
-			g.setColor(Color.red);
-			g.fillOval(x, y, getWidth()/100, getHeight()/50);
+			x = p.x-8;
+			y = p.y-8;
+			BufferedImage P_Image=null;
+			try {
+				P_Image = ImageIO.read(new File("strawberry.png"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			g.drawImage(P_Image, x, y, getWidth()/60, getHeight()/30,this);
+			
 		}
 
 		try {
@@ -477,9 +523,8 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 	}
 
 	@Override
-	public void mousePressed(MouseEvent arg0) {
+	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override

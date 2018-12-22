@@ -52,13 +52,13 @@ public class To_kml {
 		writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 		writer.write("<kml xmlns=\"http://www.opengis.net/kml/2.2\">");
 		writer.write("<Document>");
-		writer.write("<Style id=\"red\"><IconStyle><Icon><href>http://maps.google.com/mapfiles/ms/icons/red-dot.png</href></Icon></IconStyle></Style>");
-		writer.write("<Folder><name>Wifi Networks</name>\n");
+		writer.write("<Style id=\"red\"><IconStyle><Icon><href>http://maps.google.com/mapfiles/ms/icons/red-dot.png</href></Icon></IconStyle></Style>\n");
+		
 	}
 
 
 	private void writeEnd() throws IOException {
-		writer.write("</Folder>\n");
+		
 		writer.write("</Document>\n");
 		writer.write("</kml>");
 	}
@@ -96,10 +96,13 @@ public class To_kml {
 	public void run_layer() {
 		try {
 			writeStart();
+			writer.write("<Folder>\n"
+					+ "<name>Wifi Networks</name>\n");
 			Iterator<Csv_element> it = layer.iterator_csv();
 			while(it.hasNext()) {
 				writePlacemark(it.next());
 			}
+			writer.write("</Folder>\n");
 			writeEnd();
 			writer.close();
 		} catch (IOException e) {
@@ -117,10 +120,13 @@ public class To_kml {
 			writeStart();
 			Iterator<Csv_layer> it_layer = project.iterator_csv();
 			while(it_layer.hasNext()) {
+				writer.write("<Folder>\n"
+						+ "<name>Wifi Networks</name>\n");
 				Iterator<Csv_element> it_element = it_layer.next().iterator_csv();
 				while(it_element.hasNext()) {
 					writePlacemark(it_element.next());
 				}
+				writer.write("</Folder>\n");
 			}
 			writeEnd();
 			writer.close();

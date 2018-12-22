@@ -3,11 +3,7 @@ package algo;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-//import java.util.Iterator;
-//import Coords.MyCoords;
-//import game_elements.Fruit;
 import game_elements.Game;
-//import game_elements.Packman;
 
 public class Solution {
 
@@ -19,6 +15,14 @@ public class Solution {
 		longest_time();
 }
 
+	public Solution(Solution ot) {
+		Iterator<Path> it = ot.paths.iterator();
+		while(it.hasNext()) {
+			Path p = new Path(it.next());
+			paths.add(p);
+		}
+	}
+	
 	private void longest_time() {
 		Iterator<Path> it = paths.iterator();
 		double current_time, max_time = Double.MIN_VALUE;

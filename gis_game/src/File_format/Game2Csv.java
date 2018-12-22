@@ -74,15 +74,13 @@ public class Game2Csv {
 	}
 
 
-	public void run() {
-		try {
+	public void run() throws IOException{
+		
 			write_start();
 			write_body();
 			writer.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		System.out.println("Done!");
 	}
 
 }
