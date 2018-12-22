@@ -1,6 +1,7 @@
 package game_elements;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 
 
@@ -62,6 +63,13 @@ public class Game {
 
 	public boolean add_fruit(Fruit f) {
 		return fruits.add(f);
+	}
+	
+	public void addAll_fruit(ArrayList<Fruit> f) {
+		Iterator<Fruit> it_f = f.iterator();
+		while(it_f.hasNext()) {
+			fruits.add(it_f.next());
+		}
 	}
 
 	public void add_game(Game g) {

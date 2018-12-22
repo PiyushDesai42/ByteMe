@@ -48,7 +48,7 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 	private Map map = null;
 	private Game game = null;
 	private Solution solution = null;
-	
+
 	public MainWindow() 
 	{
 		initGUI();
@@ -142,7 +142,15 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 				try {
 					Game g = csv2game.run();
 					game.add_game(g);
-				} catch (IOException e1) {
+					for(int i = 0; i < g.getFruits().size(); i++) {
+						try {
+							lock.lock();
+							fruit_type.add(diff_fruits[(int) (Math.random()*4)]);
+						} finally {
+							lock.unlock();
+						}
+					}
+					} catch (IOException e1) {
 					System.out.println("invalid file!");
 				}				
 			}
@@ -194,7 +202,6 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				packman_or_fruit = "none";
-				run = "don't_run";
 				JFileChooser chooser = new JFileChooser();
 				chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				chooser.setAcceptAllFileFilterUsed(false);
@@ -216,7 +223,10 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 				}
 				Solution2Kml solution2kml;
 				try {
-					solution2kml = new Solution2Kml(new_path, game, solution);
+					if(run.equals("run"))
+						solution2kml = new Solution2Kml(new_path, solution);
+					else
+						solution2kml = new Solution2Kml(new_path, game);
 					solution2kml.run();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -262,6 +272,12 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 				packman_or_fruit = "none";
 				run = "don't_run";
 				game.clear();
+				try {
+					lock.lock();
+				fruit_type.clear();
+				} finally {
+					lock.unlock();
+				}
 				repaint();
 			}
 		});
@@ -288,6 +304,11 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(run.equals("run")) {
+					run="don't_run";
+					repaint();
+				}
+				else {
 				run = "run";
 				solution = new Solution(game);
 
@@ -356,13 +377,17 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 							double vector_size = Math.sqrt(vector.x()*vector.x()+vector.y()*vector.y());
 							Gps_vector unit_vector = new Gps_vector(vector.x()/vector_size, vector.y()/vector_size, 0);
 							double step_lat = unit_vector.x()*packman.getMeters_per_sec();
-							double step_lon = unit_vector.y()* packman.getMeters_per_sec();			
+							double step_lon = unit_vector.y()* packman.getMeters_per_sec();
+							if(step_lon>=0)
+								packman.setOrientation("right");
+							else
+								packman.setOrientation("left");
 							Gps_vector step_vector = new Gps_vector(step_lat, step_lon, 0);
 							while(run.equals("run") &&
-									coords.distance3D(packman.getGps_point(), current_fruit.getGps_point())>packman.getRadius()+2) {
+									coords.distance3D(packman.getGps_point(), current_fruit.getGps_point())>packman.getRadius()+4) {
 								Lat_lon_alt new_gps_point = coords.add(packman.getGps_point(), step_vector);
 								try {
-									Thread.sleep(10);
+									Thread.sleep(15);
 								} catch (InterruptedException e) {
 									e.printStackTrace();
 								}
@@ -372,6 +397,10 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 							try {
 								lock.lock();
 								lines.add(new Two_lat_lon_alt(original_p, packman.getGps_point(),randomColor));
+								int index = game.getFruits().indexOf(current_fruit);
+								game.getFruits().remove(current_fruit);
+								if(fruit_type.size()<index)
+								fruit_type.remove(index);
 							} finally {
 								lock.unlock();
 							}
@@ -393,7 +422,7 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 
 				System.out.println("Congradulations!\n"
 						+ "you managed to eat all of the fruit in: "+solution.getTime()+" seconds!");
-
+			}
 
 			}
 		});
@@ -401,12 +430,16 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 
 	private String packman_or_fruit = "none";
 	private String run = "don't_run";
-
+	private String[] diff_fruits = {"3d_strawberry.png","3d_apple.png","3d_cherry.png","3d_orange.png"};
+	private ArrayList<String> fruit_type = new ArrayList<String>();
+	
 	public void paint(Graphics g)
 	{
 		g.drawImage(myImage, 0, 0,getWidth()-8,getHeight()-8, this);
 		int x, y;
-
+		try {
+			lock.lock();
+			
 		Iterator<Packman> it_p = game.getPackmans().iterator();
 		while(it_p.hasNext()) {
 			Packman current_p =it_p.next();
@@ -415,7 +448,10 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 			y = p.y-10;
 			BufferedImage P_Image=null;
 			try {
-				P_Image = ImageIO.read(new File("pacman.png"));
+				if(current_p.getOrientation()=="right")
+				P_Image = ImageIO.read(new File("pacman_right.png"));
+				if(current_p.getOrientation()=="left")
+					P_Image = ImageIO.read(new File("pacman_left.png"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -423,25 +459,23 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 			g.drawImage(P_Image, x, y, getWidth()/40, getHeight()/20,this);
 		}
 
+		Iterator<String> it_s = fruit_type.iterator();
 		Iterator<Fruit> it_f = game.getFruits().iterator();
-		while(it_f.hasNext()) {
+		while(it_f.hasNext() && it_f.hasNext()) {
 			Fruit current_f =it_f.next();
 			Point p = Ratio.lat_lon2Pixel(map, current_f.getGps_point(), getWidth(), getHeight());
 			x = p.x-8;
 			y = p.y-8;
 			BufferedImage P_Image=null;
 			try {
-				P_Image = ImageIO.read(new File("strawberry.png"));
+				P_Image = ImageIO.read(new File(it_s.next()));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			g.drawImage(P_Image, x, y, getWidth()/60, getHeight()/30,this);
-			
-		}
 
-		try {
-			lock.lock();
+		}
 
 			if(run.equals("run")) {
 				Point p1 = new Point();
@@ -506,6 +540,13 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 			Fruit fruit = new Fruit(Ratio.pixel2Lat_lon(map, getWidth(), getHeight(), p));
 			System.out.println(fruit.getGps_point());
 			game.add_fruit(fruit);
+			try {
+				lock.lock();
+				fruit_type.add(diff_fruits[(int) (Math.random()*4)]);
+			} finally {
+				lock.unlock();
+			}
+			
 			repaint();
 		}
 	}

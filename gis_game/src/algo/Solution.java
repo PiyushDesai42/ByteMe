@@ -17,6 +17,7 @@ public class Solution {
 
 	public Solution(Solution ot) {
 		Iterator<Path> it = ot.paths.iterator();
+		paths = new ArrayList<Path>();
 		while(it.hasNext()) {
 			Path p = new Path(it.next());
 			paths.add(p);

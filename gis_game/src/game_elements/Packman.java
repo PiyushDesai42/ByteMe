@@ -7,26 +7,21 @@ public class Packman {
 	private Lat_lon_alt gps_point;
 	private double meters_per_sec;
 	private double radius;
-	private double orientation;
+	private String orientation;
 	
 	public Packman(Lat_lon_alt gps, double speed, double r, double orien) throws RuntimeException{
 		this.gps_point = new Lat_lon_alt(gps);
 		this.meters_per_sec = speed;
 		this.radius = r;
-		this.orientation = orien;
-		if(orientation<-180 || orientation>180) {
-			throw new RuntimeException("invalid orientation!");
-		}
+		this.orientation = "right";
 	}
 	
 	public Packman(Lat_lon_alt gps, double speed, double r) throws RuntimeException{
 		this.gps_point = new Lat_lon_alt(gps);
 		this.meters_per_sec = speed;
 		this.radius = r;
-		this.orientation = 0;
-		if(orientation<-180 || orientation>180) {
-			throw new RuntimeException("invalid orientation!");
-		}
+		this.orientation = "right";
+		
 	}
 	
 	
@@ -35,7 +30,7 @@ public class Packman {
 		this.gps_point = new Lat_lon_alt(gps);
 		this.meters_per_sec = 1;
 		this.radius = 1;
-		this.orientation = 0;
+		this.orientation = "right";
 		
 	}
 	
@@ -54,15 +49,12 @@ public class Packman {
 		this.gps_point = new Lat_lon_alt(gps_point);
 	}
 
-	public double getOrientation() {
+	public String getOrientation() {
 		return orientation;
 	}
 
-	public void setOrientation(double orientation) throws RuntimeException{
+	public void setOrientation(String orientation) throws RuntimeException{
 		this.orientation = orientation;
-		if(orientation<-180 || orientation>180) {
-			throw new RuntimeException("invalid orientation!");
-		}
 	}
 
 	public double getMeters_per_sec() {
