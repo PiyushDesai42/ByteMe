@@ -7,9 +7,19 @@ import Coords.MyCoords;
 import game_elements.Fruit;
 import game_elements.Game;
 import game_elements.Packman;
-
+/**
+ * This class has a static method with an algorithm.
+ * @author Eitan Lichtman, Netanel Indik
+ */
 public class Algorithm {
 
+	/**
+	 * This is a static method with an algorithm
+	 * that tries finding the fastest way for the packmans to eat all of the fruit.
+	 * @param game
+	 * @param paths
+	 * The method creates the closest it can to optimal paths.
+	 */
 	public static void run_algo(Game game, ArrayList<Path> paths) {
 
 		ArrayList<Fruit> fruits = new ArrayList<Fruit>(game.getFruits());
@@ -46,6 +56,9 @@ public class Algorithm {
 	}
 
 
+
+	//********************private data and methods********************
+	
 	private static double seconds_to_fruit(Packman p, Fruit f) {
 		MyCoords coords = new MyCoords();
 		return (coords.distance3D(p.getGps_point(), f.getGps_point())-p.getRadius())/p.getMeters_per_sec();

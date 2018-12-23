@@ -11,11 +11,17 @@ import game_elements.Fruit;
 import game_elements.Game;
 import game_elements.Packman;
 
+/**
+ * This class converts a game to a csv file.
+ * @author Eitan Lichtman, Netanel Indik
+ */
 public class Game2Csv {
-
-	private BufferedWriter writer;
-	private Game game = null;
-
+	
+	/**
+	 * This constructor initiates the BufferedWriter by a given output folder path.
+	 * @param output
+	 * @param g
+	 */
 	public Game2Csv(String output, Game g) {
 		try {
 			writer = new BufferedWriter(new FileWriter(output));
@@ -24,7 +30,29 @@ public class Game2Csv {
 		}
 		game = new Game(g);
 	}
+	
+	/**
+	 * This method converts our game and writes it in csv format to a file.
+	 * @throws IOException
+	 */
+	public void run() throws IOException{
+		
+			write_start();
+			write_body();
+			writer.close();
+		
+		System.out.println("Done!");
+	}
+	
+	
+	
+	
+	
+	//********************private data and methods********************
 
+	private BufferedWriter writer;
+	private Game game = null;
+	
 	private void write_start() throws IOException {
 		int p_size = game.getPackmans().size();
 		int f_size = game.getFruits().size();
@@ -73,14 +101,5 @@ public class Game2Csv {
 
 	}
 
-
-	public void run() throws IOException{
-		
-			write_start();
-			write_body();
-			writer.close();
-		
-		System.out.println("Done!");
-	}
-
+	
 }

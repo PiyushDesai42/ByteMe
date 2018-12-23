@@ -10,10 +10,16 @@ import game_elements.Fruit;
 import game_elements.Game;
 import game_elements.Packman;
 
+/**
+ * This class converts a csv file to a game.
+ * @author Eitan Lichtman, Netanel Indik
+ */
 public class Csv2Game {
-
-	private BufferedReader reader;
-
+	
+	/**
+	 * This constructor initiates the BufferedReader by a given input file path.
+	 * @param input
+	 */
 	public Csv2Game(String input) {
 		try {
 			reader = new BufferedReader(new FileReader(input));
@@ -22,7 +28,11 @@ public class Csv2Game {
 		}
 	}
 
-
+	/**
+	 * This method reads the csv file, creates and returns a game.
+	 * @return game
+	 * @throws IOException
+	 */
 	public Game run()  throws IOException{
 		try {
 			String tl = reader.readLine();
@@ -35,7 +45,14 @@ public class Csv2Game {
 			return null;
 		}
 	}
+	
+	
+	
+	
+	
+	//********************private data and methods********************
 
+	private BufferedReader reader;
 
 	private Game to_game(String[] titles) {
 
