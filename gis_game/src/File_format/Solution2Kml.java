@@ -122,7 +122,7 @@ public class Solution2Kml {
 	private void write_path_placemark(Path current_path, int counter) throws IOException {
 		MyCoords mc = new MyCoords();
 		writer.write("<Folder>\n"
-				+ "<name>Packman_"+counter+"</name>\n");
+				+ "<name>Path_"+counter+"</name>\n");
 		Packman packman = current_path.getPackman();
 		double time_counter = 0;
 		boolean end = false;
@@ -134,7 +134,6 @@ public class Solution2Kml {
 		writer.write("Radius: <b>" + packman.getRadius() + "</b><br/>");
 		writer.write("Speed: <b>" + packman.getMeters_per_sec() + " meters per second</b><br/>");
 		writer.write("</description>\n");
-		writer.write("<styleUrl>#packman</styleUrl>");
 
 
 		do{
@@ -143,9 +142,10 @@ public class Solution2Kml {
 			}
 
 			writer.write("<Placemark>\n");
-
+			writer.write("<name>Packman_"+counter+"</name>\n");
+			writer.write("<styleUrl>#packman</styleUrl>");
 			writer.write("<TimeStamp>\n");
-			writer.write("<when>"+LocalDateTime.now().plusSeconds((long) time_counter)+"Z</when>\n");
+			writer.write("<when>"+LocalDateTime.now().plusSeconds((long) time_counter)+"</when>\n");
 			writer.write("</TimeStamp>\n");
 
 			writer.write("<Point>\n");
