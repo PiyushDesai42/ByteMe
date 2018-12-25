@@ -1,8 +1,8 @@
 package convert;
 
 import java.awt.Point;
+import java.awt.geom.Point2D;
 
-import com.sun.javafx.geom.Point2D;
 import Coords.Lat_lon_alt;
 import game_elements.Map;
 
@@ -57,12 +57,12 @@ public class Ratio {
 		double partial_height = gps_max.x()-gps_point.x();
 		float height = (float)(partial_height/full_height);
 
-		return new Point2D(width, height);
+		return new Point2D.Float(width, height);
 	}
 	
 
 	private static Point2D pixel2Ratio(int full_width, int full_height, Point p) {
-		return new Point2D((float)p.x/full_width, (float)p.y/full_height);
+		return new Point2D.Float((float)p.x/full_width, (float)p.y/full_height);
 	}
 	
 
@@ -72,16 +72,16 @@ public class Ratio {
 		double max_lat = gps_max.x();
 		double max_lon = gps_max.y();
 
-		double new_lat = min_lat + (max_lat-min_lat)*(1-ratio.y);
-		double new_lon = min_lon + (max_lon-min_lon)*ratio.x;
+		double new_lat = min_lat + (max_lat-min_lat)*(1-ratio.getY());
+		double new_lon = min_lon + (max_lon-min_lon)*ratio.getX();
 
 		return new Lat_lon_alt(new_lat, new_lon, 0);
 	}
 
 	
 	private static Point ratio2Pixel(int full_width, int full_height, Point2D ratio) {
-		int new_width = (int)(full_width * ratio.x);
-		int new_height = (int)(full_height * ratio.y);
+		int new_width = (int)(full_width * ratio.getX());
+		int new_height = (int)(full_height * ratio.getY());
 
 		return new Point(new_width, new_height);
 	}

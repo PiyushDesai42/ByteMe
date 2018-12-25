@@ -1,11 +1,14 @@
 package GUI;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Menu;
 import java.awt.MenuBar;
 import java.awt.MenuItem;
 import java.awt.Point;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -439,7 +442,9 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 					p1 = Ratio.lat_lon2Pixel(map, double_gps.gps0, getWidth(), getHeight());
 					p2 = 	Ratio.lat_lon2Pixel(map, double_gps.gps1, getWidth(), getHeight());
 					g.setColor(double_gps.c);
-					g.drawLine(p1.x, p1.y, p2.x, p2.y);
+					Graphics2D g2 = (Graphics2D) g;
+					g2.setStroke(new BasicStroke(4));
+					g2.drawLine(p1.x, p1.y, p2.x, p2.y);
 				}
 			}
 			else {
