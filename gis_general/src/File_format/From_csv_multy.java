@@ -6,6 +6,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import CSV.Csv_layer;
+import CSV.Csv_project;
+
 /**
  * this class converts multiple csv files from a given folder to a Csv_project
  * @author Eitan Lichtman, Netanel Indik

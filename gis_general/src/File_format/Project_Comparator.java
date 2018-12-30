@@ -3,6 +3,8 @@ package File_format;
 import java.io.IOException;
 import java.util.Comparator;
 
+import CSV.Csv_layer;
+
 public class Project_Comparator implements Comparator<Csv_layer>{
 
 	@Override

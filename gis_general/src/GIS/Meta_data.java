@@ -2,8 +2,6 @@ package GIS;
 
 import java.io.IOException;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
-
 import Geom.Point3D;
 
 public interface Meta_data {

@@ -1,4 +1,4 @@
-package File_format;
+package CSV;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import File_format.Project_Comparator;
 import GIS.GIS_layer;
 import GIS.GIS_project;
 import GIS.Meta_data;

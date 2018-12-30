@@ -1,4 +1,4 @@
-package File_format;
+package CSV;
 
 import java.util.ArrayList;
 import java.util.Collection;
