@@ -15,7 +15,7 @@ public class Csv2kml {
 	private int latIndex, lonIndex, altIndex;
 
 	/**
-	 * constructor that receives an input and output file
+	 * constructor that receives an input file and lat lon alt indexes
 	 * @param input
 	 * @param output
 	 * @throws IOException
@@ -33,7 +33,7 @@ public class Csv2kml {
 	 */
 	void run() {
 		try {
-			From_csv csv = new From_csv(input,latIndex, lonIndex, altIndex);
+			From_csv csv = new From_csv(input, latIndex, lonIndex, altIndex);
 			Csv_layer layer = csv.to_Csv_layer();
 			To_kml kml = new To_kml(output, layer);
 			kml.run_layer();
