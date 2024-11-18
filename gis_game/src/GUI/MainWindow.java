@@ -217,6 +217,21 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 		});
 	}
 
+	/**
+	 * This method extracts roads
+	 * @param add_e
+	 */
+	private void add_e(MenuItem add_e) {
+		add_e.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				packman_or_fruit = "fruit";
+				run = "don't_run";
+			}
+		});
+	}
+
 
 	/**
 	 * This method adds a fruit to our game board.
@@ -545,7 +560,7 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 	private Solution solution = null;
 	private String packman_or_fruit = "none";
 	private String run = "don't_run";
-	private String[] diff_fruits = {"3d_strawberry.png","3d_apple.png","3d_cherry.png","3d_orange.png"};
+	private String[] diff_fruits = {"3d_strawberry.png","3d_apple.png","3d_cherry.png","3d_lollipop.png"};
 	private ArrayList<String> fruit_type = new ArrayList<String>();
 	private final Lock lock = new ReentrantLock();
 	private ArrayList<Two_lat_lon_alt> lines = new ArrayList<Two_lat_lon_alt>();
@@ -575,10 +590,12 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 		MenuItem create_kml = new MenuItem("create kml");
 		create_kml(create_kml);
 
-		MenuItem add_p = new MenuItem("add packmans");
+		MenuItem add_p = new MenuItem("add players");
 		add_p(add_p);
-		MenuItem add_f = new MenuItem("add fruits");
+		MenuItem add_f = new MenuItem("add objects");
 		add_f(add_f);
+		MenuItem add_e = new MenuItem("extract roads");
+		add_e(add_e);
 		MenuItem clear = new MenuItem("clear");
 		clear(clear);
 		MenuItem run_manual = new MenuItem("run");
@@ -593,6 +610,7 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 
 		manual.add(add_p);
 		manual.add(add_f);
+		manual.add(add_e);
 		manual.add(clear);
 		manual.add(run_manual);
 
