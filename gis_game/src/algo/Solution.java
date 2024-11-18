@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import game_elements.Game;
+import java.io.IOException;
 
 /**
  * This class represents a full solution for a game using the algorithm method.
@@ -26,7 +27,8 @@ public class Solution {
 	 */
 	public Solution(Game game) {
 		paths = new ArrayList<Path>();
-		Algorithm.run_algo(game, paths);
+		NavMesh navmesh = new NavMesh("gis_game\\Images\\layers.jpg");
+		Algorithm.run_algo(game, paths, navmesh);
 		longest_time();
 	}
 

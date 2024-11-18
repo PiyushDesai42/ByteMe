@@ -1,12 +1,11 @@
 package algo;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import Coords.MyCoords;
 import game_elements.Fruit;
 import game_elements.Game;
 import game_elements.Packman;
+import java.util.ArrayList;
+import java.util.Iterator;
 /**
  * This class has a static method with an algorithm.
  * @author Eitan Lichtman, Netanel Indik
@@ -20,7 +19,7 @@ public class Algorithm {
 	 * @param paths
 	 * The method creates the closest it can to optimal paths.
 	 */
-	public static void run_algo(Game game, ArrayList<Path> paths) {
+	public static void run_algo(Game game, ArrayList<Path> paths, NavMesh navmesh) {
 
 		ArrayList<Fruit> fruits = new ArrayList<Fruit>(game.getFruits());
 		ArrayList<Packman> packmans = new ArrayList<Packman>();
@@ -36,6 +35,7 @@ public class Algorithm {
 			double closest_fruit_length = Integer.MAX_VALUE;
 			Path best_path = null;
 			Packman best_packman = null;
+
 			it_packman = packmans.iterator();
 			Iterator<Path> it_path = paths.iterator();
 			while(it_path.hasNext() && it_packman.hasNext()) {
@@ -43,8 +43,24 @@ public class Algorithm {
 				Packman current_packman = it_packman.next();
 				Iterator<Fruit> it_fruit = fruits.iterator();
 				Fruit current_fruit=null;
+				
+
 				while(it_fruit.hasNext()) {
 					current_fruit = it_fruit.next();
+					int fruitX = current_fruit.getGps_point().ix();  // Assuming `x` is a field in `Fruit`
+            		int fruitY = current_fruit.getGps_point().iy(); 
+					
+					if (navmesh.isWalkable(fruitX, fruitY)) {
+						// Only consider the fruit if it's on a walkable tile
+						if (current_path.getTime() + seconds_to_fruit(current_packman, current_fruit)
+								< closest_fruit_length) {
+							best_packman = current_packman;
+							best_path = current_path;
+							closest_fruit = current_fruit;
+							closest_fruit_length = current_path.getTime() + seconds_to_fruit(current_packman, current_fruit);
+						}
+					}
+					
 					if(current_path.getTime()+seconds_to_fruit(current_packman, current_fruit)
 					<closest_fruit_length) {
 						best_packman = current_packman;
@@ -54,14 +70,15 @@ public class Algorithm {
 					}
 				}
 			}
-			best_path.add_fruit(closest_fruit);
-			fruits.remove(closest_fruit);
-			best_path.setTime(closest_fruit_length);
-			best_packman.setGps_point(closest_fruit.getGps_point());
+			if (best_path != null && closest_fruit != null) {
+				best_path.add_fruit(closest_fruit);
+				fruits.remove(closest_fruit);
+				best_path.setTime(closest_fruit_length);
+				best_packman.setGps_point(closest_fruit.getGps_point());  // Or set the new position of the packman
+			}
 		}
 		
 	}
-
 
 
 	//********************private data and methods********************

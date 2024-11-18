@@ -1,6 +1,5 @@
 package Coords;
 
-import Coords.Lat_lon_alt;
 import Geom.Point3D;
 
 /**
@@ -22,7 +21,6 @@ public class Lat_lon_alt extends Point3D{
 			throw new RuntimeException("invalid gps point!");
 		}
 	}
-	
 	
 	public boolean isValid_GPS_Point() {
 		return (this.x()>=-90 && this.x()<=90

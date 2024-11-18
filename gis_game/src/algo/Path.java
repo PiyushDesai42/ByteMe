@@ -99,8 +99,6 @@ public class Path {
 		return fruits;
 	}
 	
-	
-	
 	//********************private data and methods********************
 	
 	private Packman packman;

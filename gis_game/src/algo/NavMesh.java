@@ -9,8 +9,9 @@ public class NavMesh {
     private boolean[][] grid;
     private int width, height;
  
-    public NavMesh(String imagePath) throws IOException {
-        // Load the image
+    public NavMesh(String imagePath) {
+        try {
+            // Load the image
         BufferedImage image = ImageIO.read(new File(imagePath));
         width = image.getWidth();
         height = image.getHeight();
@@ -28,6 +29,11 @@ public class NavMesh {
                 }
             }
         }
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
     }
  
     private boolean isWalkable(int rgb) {
@@ -36,8 +42,8 @@ public class NavMesh {
         int g = (rgb >> 8) & 0xff;
         int b = rgb & 0xff;
  
-        // For example, walkable if the pixel is white
-        return r > 200 && g > 200 && b > 200;  // Adjust this condition based on your needs
+        // For example, walkable if the pixels are of road
+        return r < 170 && g < 170 && b < 170;  // Adjust this condition based on your needs
     }
  
     public boolean isWalkable(int x, int y) {

@@ -570,7 +570,7 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 	{
 		initMENU();
 		try {
-			myImage = ImageIO.read(new File("gis_game\\Images\\image.jpg"));
+			myImage = ImageIO.read(new File("gis_game\\Images\\layers.jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}		
@@ -590,9 +590,9 @@ public class MainWindow extends JFrame implements MouseListener, MenuListener
 		MenuItem create_kml = new MenuItem("create kml");
 		create_kml(create_kml);
 
-		MenuItem add_p = new MenuItem("add players");
+		MenuItem add_p = new MenuItem("Add Executors");
 		add_p(add_p);
-		MenuItem add_f = new MenuItem("add objects");
+		MenuItem add_f = new MenuItem("Add Locations");
 		add_f(add_f);
 		MenuItem add_e = new MenuItem("extract roads");
 		add_e(add_e);
